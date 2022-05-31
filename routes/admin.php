@@ -17,6 +17,16 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', [LoginController::class, 'showLoginForm']);
-Route::post('/login', [LoginController::class, 'doLogin'])->name('login');
-Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::group(['middleware' => 'auth:admin'], function () {
+
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {
+        Route::get('/create', [AdminController::class, 'create'])->name('create');
+        
+        Route::get('/display', [AdminController::class, 'display'])->name('display');
+    });
+});

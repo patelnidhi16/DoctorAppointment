@@ -21,8 +21,8 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="{{asset('admin/assets/css/style.css')}}">
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.png')}}" />
-
+  <link rel="shortcut icon" href="https://www.cleanpng.com/png-physician-symbol-staff-of-hermes-medicine-clip-art-202085/preview.html" />
+  @stack('style')
 </head>
 
 <body>
@@ -36,7 +36,7 @@
       @include('Admin/layouts/header')
       <!-- partial -->
       <div class="main-panel">
-        @include('Admin/layouts/content')
+        @yield('content')
 
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
@@ -50,6 +50,7 @@
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
+  
   <script src="{{asset('admin/assets/vendors/js/vendor.bundle.base.js')}}"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
@@ -67,7 +68,9 @@
   <script src="{{asset('admin/assets/js/todolist.js')}}"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
-  <script src="{{asset('admin/assets/js/dashboard.js')}}"></script>
+  <script src="{{asset('admin/assets/js/dashboard.js')}}"></script> 
+   @stack('script')
+
   <!-- End custom js for this page -->
 </body>
 

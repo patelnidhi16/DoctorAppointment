@@ -93,7 +93,6 @@
             password: {
                 required: true,
             },
-
         },
         submitHandler: function(form) {
            
@@ -106,12 +105,10 @@
                 data: new FormData(form),
                 success: function(data) {
                   alert(1);
-
                 },
                 error:function(data){
                     alert(12);
                 }
-
             });
         }
     });
