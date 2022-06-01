@@ -11,18 +11,15 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
+        
         return view('Admin.layouts.master');
     }
 
-    // public function create(DoctorDataTable $doctorDataTable)
-    // {
-    //     $doctors=Doctor::get();
-   
-    //     return $doctorDataTable->render('Admin.Doctor.createadmin',compact('doctors'));
-
-    // }
+    
     public function create(Request $request)
     {
+        
+      
         $request->validate([
             'name'=>'required|alpha|min:2',
             'email'=>'required|email|unique:doctors|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
@@ -43,9 +40,9 @@ class AdminController extends Controller
         ]);
     }
 
-     public function display(DoctorDataTable $doctorDataTable)
+     public function index(DoctorDataTable $doctorDataTable)
     {
         // $doctors=Doctor::get();
-        return $doctorDataTable->render('Admin.Doctor.createadmin');
+        return $doctorDataTable->render('Admin.Doctor.index');
     }
 }

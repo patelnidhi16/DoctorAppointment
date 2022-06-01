@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Appointment\AppointmentController;
+use App\Http\Controllers\Doctor\DoctorController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +28,17 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {
-        Route::get('/create', [AdminController::class, 'create'])->name('create');
-        
-        Route::get('/display', [AdminController::class, 'display'])->name('display');
+        Route::post('/create', [AdminController::class, 'create'])->name('create');
+        Route::get('/index', [AdminController::class, 'index'])->name('index');
+        Route::get('/delete', [DoctorController::class, 'delete'])->name('delete');
+        Route::get('/edit', [DoctorController::class, 'edit'])->name('edit');
+        Route::post('/update', [DoctorController::class, 'update'])->name('update');
+    });
+    Route::group(['prefix' => 'appointment', 'as' => "appointment."], function () {
+        Route::post('/create', [AppointmentController::class, 'create'])->name('create');
+        Route::get('/index', [AppointmentController::class, 'index'])->name('index');
+        Route::get('/delete', [AppointmentController::class, 'delete'])->name('delete');
+        Route::get('/edit', [AppointmentController::class, 'edit'])->name('edit');
+        Route::post('/update', [AppointmentController::class, 'update'])->name('update');
     });
 });

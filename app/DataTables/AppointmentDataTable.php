@@ -2,14 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\Doctor;
+use App\Models\Appointment;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class DoctorDataTable extends DataTable
+class AppointmentDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,7 +24,7 @@ class DoctorDataTable extends DataTable
             ->addColumn('action', function ($user) {
                 $result = '';
                 $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>Delete</button>";
-                $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
+                $result .= "<button data-bs-target='#updateappointment' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
                 
                 return $result;
             })
@@ -36,10 +36,10 @@ class DoctorDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Doctor $model
+     * @param \App\Models\Appointment $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Doctor $model)
+    public function query(Appointment $model)
     {
         return $model->newQuery();
     }
@@ -52,18 +52,18 @@ class DoctorDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('doctor-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->dom('Bfrtip')
-            ->orderBy(1)
-            ->buttons(
-                Button::make('create'),
-                Button::make('export'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            );
+                    ->setTableId('appointment-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->dom('Bfrtip')
+                    ->orderBy(1)
+                    ->buttons(
+                        Button::make('create'),
+                        Button::make('export'),
+                        Button::make('print'),
+                        Button::make('reset'),
+                        Button::make('reload')
+                    );
     }
 
     /**
@@ -78,15 +78,15 @@ class DoctorDataTable extends DataTable
             Column::make('name'),
             Column::make('email'),
             Column::make('mobile'),
-            Column::make('shift'),
+            Column::make('doctor_id'),
+            Column::make('date'),
             Column::make('start_time'),
             Column::make('end_time'),
             Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
-            
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
         ];
     }
 
@@ -97,6 +97,6 @@ class DoctorDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Doctor_' . date('YmdHis');
+        return 'Appointment_' . date('YmdHis');
     }
 }

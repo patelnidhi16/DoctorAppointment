@@ -56,20 +56,29 @@
           <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
           </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{{route('admin.doctor.create')}}">
+          <li class="nav-item menu-items {{ request()->is('*doctor*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('admin.doctor.index')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
               <span class="menu-title">Doctors</span>
             </a>
           </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="index.html">
+          
+          <li class="nav-item menu-items {{ request()->is('*dashboard*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('admin.dashboard')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
               <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items {{ request()->is('*appointment*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('admin.appointment.index')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-speedometer"></i>
+              </span>
+              <span class="menu-title">Appointment</span>
             </a>
           </li>
           <li class="nav-item menu-items">
@@ -90,6 +99,14 @@
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="pages/forms/basic_elements.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title">Form Elements</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="jcvfnj.html">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>

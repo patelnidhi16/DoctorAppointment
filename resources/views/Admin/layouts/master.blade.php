@@ -4,6 +4,8 @@
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Corona Admin</title>
   <!-- plugins:css -->
@@ -41,13 +43,13 @@
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         @include('Admin/layouts/footer')
-
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+  @yield('modal')
   <!-- container-scroller -->
   <!-- plugins:js -->
   
