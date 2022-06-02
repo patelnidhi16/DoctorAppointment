@@ -24,7 +24,7 @@ class AppointmentDataTable extends DataTable
             ->addColumn('action', function ($user) {
                 $result = '';
                 $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>Delete</button>";
-                $result .= "<button data-bs-target='#updateappointment' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
+                $result .= "<button data-target='#createapointment' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
                 
                 return $result;
             })

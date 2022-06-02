@@ -5,6 +5,7 @@
 <style>
     .error {
         color: red;
+        font-size: 15px;
     }
 </style>
 @endpush
@@ -28,9 +29,9 @@
     </div>
 </div>
 @endsection
-@section('modal')
+<!-- @section('modal') -->
 @include('Admin.Appointment.create')
-@endsection
+<!-- @endsection -->
 
 
 @push('script')
@@ -58,9 +59,9 @@
         $('#date').attr('min', minDate);
     });
     $(document).on('click', '.addappointment', function() {
-
-        $(document).find('#editdoctor').attr('id', 'createdoctor');
-        $('#createdoctor').trigger('reset');
+     
+        $(document).find('#editdoctor').attr('id', 'createappointment');
+        $('#createappointment').trigger('reset');
 
         $(document).on('click', '#submit', function() {
 
@@ -103,9 +104,15 @@
                         processData: false,
                         contentType: false,
                         success: function(data) {
-                            $('.modal').remove();
-                            $('.modal-backdrop').remove();
-                            swal(1);
+                            console.log(data.status);
+                            if (data.status == false) {
+                                swal(data.msg);
+                            } else {
+
+                                $('.modal').remove();
+                                $('.modal-backdrop').remove();
+                                swal(data.msg);
+                            }
                         },
                         error: function(data) {
                             console.log(data);
@@ -148,7 +155,8 @@
                             swal("Poof! Your imaginary file has been deleted!", {
                                 icon: "success",
                             });
-                            $('.modal-backdrop').remove();
+                            window.LaravelDataTables["appointment-table"].draw();
+
 
                         }
                     });
@@ -158,5 +166,110 @@
             });
 
     });
+
+    $(document).on('click', '.edit', function() {
+        $('.error').html("");
+        $('.form-control').removeClass('error');
+        $(document).find('#createdoctor').attr('id', 'editdoctor');
+        var id = $(this).attr('dataid');
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{route("admin.appointment.edit")}}',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function(data) {
+
+                $('#id').val(data.id);
+                $('#name').val(data.name);
+                $('#email').val(data.email);
+                $('#mobile').val(data.mobile);
+                $('#doctor').val(data.doctor_id);
+                $('#date').val(data.date);
+                $('#start_time').val(data.start_time);
+                $('#end_time').val(data.end_time);
+            }
+        });
+    });
+
+    // $(document).on('click', '#submit', function() {
+
+// $('#createappointment').validate({
+//     rules: {
+//         name: {
+//             required: true,
+//         },
+//         email: {
+//             required: true,
+//             email: true,
+//         },
+
+//         mobile: {
+//             required: true,
+//         },
+//         doctor_id: {
+//             required: true,
+//         },
+
+//         start_time: {
+//             required: true,
+//         },
+//         end_time: {
+//             required: true,
+//         },
+//     },
+//     submitHandler: function(form) {
+//         //  
+//         swal({
+//                 title: "Are you sure?",
+//                 text: "Once deleted, you will not be able to recover this imaginary file!",
+//                 icon: "warning",
+//                 buttons: true,
+//                 dangerMode: true,
+//             })
+//             .then((willDelete) => {
+//                 if (willDelete) {
+//                     $.ajax({
+//                         headers: {
+//                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                         },
+//                         url: '{{route("admin.appointment.update")}}',
+//                         type: 'post',
+//                         data: new FormData(form),
+//                         processData: false,
+//                         contentType: false,
+//                         success: function(data) {
+//                             $('#exampleModal').hide();
+
+//                             $('.modal-backdrop').remove();
+//                             swal("your data updated successfully");
+//                             window.LaravelDataTables["doctor-table"].draw();
+
+//                         },
+//                         error: function(data) {
+
+//                             console.log(data);
+//                             var errors = $.parseJSON(data.responseText);
+
+//                             $.each(errors.errors, function(key, value) {
+//                                 console.log(key);
+//                                 console.log(value);
+//                                 $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
+//                             });
+//                         },
+//                     });
+//                 } else {
+//                     swal("Your imaginary file is safe!");
+//                 }
+//             });
+//         // 
+
+//     }
+// });
+// });
 </script>
 @endpush

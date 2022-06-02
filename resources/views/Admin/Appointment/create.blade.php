@@ -33,10 +33,10 @@
                     </div>
                     <div class="form-group">
                         <label for="doctor">Select Doctor</label>
-                        <select class="form-control" id="doctor" name="doctor">
+                        <select class="form-control" id="doctor" name="doctor_id">
                             <option value="">Select Doctor</option>
                             @foreach($doctors as $doctor)
-                            <option value="{{$doctor->id}}">{{$doctor->name}}</option>
+                            <option value="{{$doctor->id}}" name="doctor_id">{{$doctor->name}}</option>
                             @endforeach
                         </select>
                         <span class="error"></span>

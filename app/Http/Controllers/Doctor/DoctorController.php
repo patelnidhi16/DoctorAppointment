@@ -53,13 +53,12 @@ class DoctorController extends Controller
         $request->validate([
             'name' => 'required|alpha|min:2',
             'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i|unique:doctors,email,'.$request->id,
-            'mobile' => 'required|digits:10|unique:doctors,mobile,'.$request->id,
+            'mobile' => 'required|number|difits:10|unique:doctors,mobile,'.$request->id,
             'shift' => 'required',
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
         ]);
         $id = $request->id;
-
         Doctor::where("id", $id)->update([
             'name' => $request->name,
             'email' => $request->email,

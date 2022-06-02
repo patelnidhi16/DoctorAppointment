@@ -3,8 +3,9 @@
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <style>
-  .error {
+  .error, span.error {
     color: red;
+    font-size: 15px;
   }
 </style>
 @endpush
@@ -43,7 +44,7 @@
 {!! $dataTable->scripts() !!}
 <script>
   $(document).on('click', '.add', function() {
-    
+
     $(document).find('#editdoctor').attr('id', 'createdoctor');
     $('#createdoctor').trigger('reset');
 
@@ -83,7 +84,7 @@
             contentType: false,
             success: function(data) {
               $('#exampleModal').hide();
-           
+
               $('.modal-backdrop').remove();
               swal("data inserted successfully");
             },
@@ -127,6 +128,9 @@
               swal("Poof! Your imaginary file has been deleted!", {
                 icon: "success",
               });
+              window.LaravelDataTables["doctor-table"].draw();
+
+
             }
           });
         } else {
@@ -167,55 +171,75 @@
   });
   $(document).on('click', '#submit', function() {
 
-  $('#editdoctor').validate({
-    rules: {
-      name: {
-        required: true,
-      },
-      email: {
-        required: true,
-        email: true,
-      },
-
-      mobile: {
-        required: true,
-      },
-
-      start_time: {
-        required: true,
-      },
-      end_time: {
-        required: true,
-      },
-    },
-    submitHandler: function(form) {
-      alert(121);
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    $('#editdoctor').validate({
+      rules: {
+        name: {
+          required: true,
         },
-        url: '{{route("admin.doctor.update")}}',
-        type: 'post',
-        data: new FormData(form),
-        processData: false,
-        contentType: false,
-        success: function(data) {
-         
+        email: {
+          required: true,
+          email: true,
         },
-        error: function(data) {
-          alert(21);
-          console.log(data);
-          var errors = $.parseJSON(data.responseText);
 
-          $.each(errors.errors, function(key, value) {
-            console.log(key);
-            console.log(value);
-            $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
+        mobile: {
+          required: true,
+        },
+
+        start_time: {
+          required: true,
+        },
+        end_time: {
+          required: true,
+        },
+      },
+      submitHandler: function(form) {
+        //  
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              $.ajax({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{route("admin.doctor.update")}}',
+                type: 'post',
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                  $('#exampleModal').hide();
+
+                  $('.modal-backdrop').remove();
+                  swal("your data updated successfully");
+                  window.LaravelDataTables["doctor-table"].draw();
+
+                },
+                error: function(data) {
+
+                  console.log(data);
+                  var errors = $.parseJSON(data.responseText);
+
+                  $.each(errors.errors, function(key, value) {
+                    console.log(key);
+                    console.log(value);
+                    $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                  });
+                },
+              });
+            } else {
+              swal("Your imaginary file is safe!");
+            }
           });
-        },
-      });
-    }
-  });
+        // 
+
+      }
+    });
   });
 </script>
 @endpush
