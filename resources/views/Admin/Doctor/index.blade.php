@@ -87,6 +87,8 @@
 
               $('.modal-backdrop').remove();
               swal("data inserted successfully");
+              window.LaravelDataTables["doctor-table"].draw();
+
             },
             error: function(data) {
               console.log(data);

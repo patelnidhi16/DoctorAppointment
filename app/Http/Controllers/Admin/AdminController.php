@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\DoctorDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Doctor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
+        $appointment = Appointment::whereDate('date',Carbon::today())->get();
         
-        return view('Admin.layouts.master');
+        $count = count($appointment);
+        return view('Admin.content',compact('count'));
     }
 
     

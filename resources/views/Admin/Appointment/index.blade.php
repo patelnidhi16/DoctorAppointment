@@ -21,6 +21,23 @@
             <!-- Modal -->
             <div class="card">
                 <div class="card-body">
+
+                    <div class="row">
+
+                        <select class="form-control col-2 ml-5" id="doctor_filter" name="doctor">
+                            <option>Select Doctor </option>
+                            @foreach($doctors as $doc)
+                            <option>{{$doc['name']}}</option>
+                            @endforeach
+                        </select>
+                        <select class="form-control col-2 ml-5" id="date_filter" name="date">
+                            <option>Select Date </option>
+                            @foreach($appointment as $appo)
+                            <option>{{$appo['date']}}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
                     {!! $dataTable->table(['class' => 'table table-striped zero-configuration dataTable']) !!}
                 </div>
             </div>
@@ -43,6 +60,25 @@
 {!! $dataTable->scripts() !!}
 
 <script>
+    $('#appointment-table').on('preXhr.dt', function(e, settings, data) {
+        data.doctor = $('#doctor_filter').val();
+        data.date = $('#date_filter').val();
+        console.log(data.doctor);
+        // data.title = $('#title_filter').val();
+        console.log(data);
+    });
+    $(document).on('change', '#doctor_filter', function() {
+
+        window.LaravelDataTables['appointment-table'].draw();
+
+
+    });
+    $(document).on('change', '#date_filter', function() {
+
+        window.LaravelDataTables['appointment-table'].draw();
+
+    });
+
     $(function() {
         var dtToday = new Date();
 
@@ -59,8 +95,8 @@
         $('#date').attr('min', minDate);
     });
     $(document).on('click', '.addappointment', function() {
-     
-        $(document).find('#editdoctor').attr('id', 'createappointment');
+
+        $(document).find('#updateappointment').attr('id', 'createappointment');
         $('#createappointment').trigger('reset');
 
         $(document).on('click', '#submit', function() {
@@ -108,10 +144,11 @@
                             if (data.status == false) {
                                 swal(data.msg);
                             } else {
-
                                 $('.modal').remove();
-                                $('.modal-backdrop').remove();
                                 swal(data.msg);
+                                $('.modal-backdrop').remove();
+                                window.location.reload();
+                                window.LaravelDataTables["appointment-table"].draw();
                             }
                         },
                         error: function(data) {
@@ -170,7 +207,8 @@
     $(document).on('click', '.edit', function() {
         $('.error').html("");
         $('.form-control').removeClass('error');
-        $(document).find('#createdoctor').attr('id', 'editdoctor');
+        $(document).find('#createappointment').attr('id', 'updateappointment');
+
         var id = $(this).attr('dataid');
 
         $.ajax({
@@ -196,80 +234,112 @@
         });
     });
 
-    // $(document).on('click', '#submit', function() {
+    $(document).on('click', '#submit', function() {
 
-// $('#createappointment').validate({
-//     rules: {
-//         name: {
-//             required: true,
-//         },
-//         email: {
-//             required: true,
-//             email: true,
-//         },
+        $('#updateappointment').validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
 
-//         mobile: {
-//             required: true,
-//         },
-//         doctor_id: {
-//             required: true,
-//         },
+                mobile: {
+                    required: true,
+                },
+                shift: {
+                    required: true
+                },
+                doctor_id: {
+                    required: true,
+                },
 
-//         start_time: {
-//             required: true,
-//         },
-//         end_time: {
-//             required: true,
-//         },
-//     },
-//     submitHandler: function(form) {
-//         //  
-//         swal({
-//                 title: "Are you sure?",
-//                 text: "Once deleted, you will not be able to recover this imaginary file!",
-//                 icon: "warning",
-//                 buttons: true,
-//                 dangerMode: true,
-//             })
-//             .then((willDelete) => {
-//                 if (willDelete) {
-//                     $.ajax({
-//                         headers: {
-//                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//                         },
-//                         url: '{{route("admin.appointment.update")}}',
-//                         type: 'post',
-//                         data: new FormData(form),
-//                         processData: false,
-//                         contentType: false,
-//                         success: function(data) {
-//                             $('#exampleModal').hide();
+                start_time: {
+                    required: true,
+                },
+                end_time: {
+                    required: true,
+                },
+            },
+            submitHandler: function(form) {
+                //  
+                swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: '{{route("admin.appointment.create")}}',
+                                type: 'post',
+                                data: new FormData(form),
+                                processData: false,
+                                contentType: false,
+                                success: function(data) {
+                                    console.log(data.status);
+                                    if (data.status == false) {
+                                        swal(data.msg);
+                                    } else {
+                                        $('.modal').remove();
+                                        $('.modal-backdrop').remove();
+                                        swal(data.msg);
+                                    }
 
-//                             $('.modal-backdrop').remove();
-//                             swal("your data updated successfully");
-//                             window.LaravelDataTables["doctor-table"].draw();
+                                    window.LaravelDataTables["appointment-table"].draw();
 
-//                         },
-//                         error: function(data) {
+                                },
+                                error: function(data) {
 
-//                             console.log(data);
-//                             var errors = $.parseJSON(data.responseText);
+                                    console.log(data);
+                                    var errors = $.parseJSON(data.responseText);
 
-//                             $.each(errors.errors, function(key, value) {
-//                                 console.log(key);
-//                                 console.log(value);
-//                                 $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
-//                             });
-//                         },
-//                     });
-//                 } else {
-//                     swal("Your imaginary file is safe!");
-//                 }
-//             });
-//         // 
+                                    $.each(errors.errors, function(key, value) {
+                                        console.log(key);
+                                        console.log(value);
+                                        $('#updateappointment').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                                    });
+                                },
+                            });
+                        } else {
+                            swal("Your imaginary file is safe!");
+                        }
+                    });
+                // 
 
-//     }
-// });
-// });
+            }
+        });
+    });
+
+    $(document).on('change', '#shift', function() {
+        id = $(this).val();
+        
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{route("admin.appointment.getdoctor")}}',
+            type: 'get',
+            data: {
+                id:id,
+            },
+           
+            success: function(data) {
+                alert("success")
+
+            },
+            error: function(data) {
+
+                alert("error");
+            },
+        });
+    });
 </script>
 @endpush

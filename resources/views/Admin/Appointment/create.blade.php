@@ -11,7 +11,7 @@
 
                 <form class="forms-sample" method="POST" id="createappointment">
                     @csrf
-              
+
                     <input type="hidden" id="id" name="id">
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -31,6 +31,17 @@
                         <span class="error"></span>
 
                     </div>
+                    <div class="form-group">
+                        <label for="shift">Select Shift</label>
+                        <select class="form-control" id="shift" name="shift">
+                            <option value="">Select Shift</option>
+                            <option value="1" class="shift" name="1">Morning</option>
+                            <option value="2" class="shift" name="2">Evening</option>
+                        </select>
+                        <span class="error"></span>
+
+                    </div>
+                   
                     <div class="form-group">
                         <label for="doctor">Select Doctor</label>
                         <select class="form-control" id="doctor" name="doctor_id">

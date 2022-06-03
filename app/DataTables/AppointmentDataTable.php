@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Appointment;
+use App\Models\Doctor;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -25,10 +27,10 @@ class AppointmentDataTable extends DataTable
                 $result = '';
                 $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>Delete</button>";
                 $result .= "<button data-target='#createapointment' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
-                
+
                 return $result;
             })
-            
+
             ->rawColumns(['image', 'action'])
             ->addIndexColumn();
     }
@@ -39,9 +41,22 @@ class AppointmentDataTable extends DataTable
      * @param \App\Models\Appointment $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Appointment $model)
+    public function query(Appointment $model, Request $request)
     {
-        return $model->newQuery();
+        $doctor = $request->doctor;
+        $name = Doctor::where('name', $doctor)->get()->toArray();
+
+        $date = Appointment::where('date', $request->date)->get('date')->toArray();
+        if ($name && $date) {
+            return $model->where('doctor_id',  $name[0]['id'])->where('date', $date[0]['date']);
+        } elseif ($name) {
+            return $model->where('doctor_id',  $name[0]['id']);
+        } elseif ($date) {
+
+            return $model->where('date', $date[0]['date']);
+        } else {
+            return $model->newQuery();
+        }
     }
 
     /**
@@ -52,18 +67,18 @@ class AppointmentDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('appointment-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('appointment-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -83,10 +98,10 @@ class AppointmentDataTable extends DataTable
             Column::make('start_time'),
             Column::make('end_time'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

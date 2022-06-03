@@ -26,16 +26,19 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/appointmentcount', [AppointmentController::class, 'appointmentcount'])->name('appointmentcount');
 
     Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {
-        Route::post('/create', [AdminController::class, 'create'])->name('create');
         Route::get('/index', [AdminController::class, 'index'])->name('index');
+        Route::post('/create', [AdminController::class, 'create'])->name('create');
         Route::get('/delete', [DoctorController::class, 'delete'])->name('delete');
         Route::get('/edit', [DoctorController::class, 'edit'])->name('edit');
         Route::post('/update', [DoctorController::class, 'update'])->name('update');
+        
     });
     Route::group(['prefix' => 'appointment', 'as' => "appointment."], function () {
         Route::post('/create', [AppointmentController::class, 'create'])->name('create');
+        Route::get('/getdoctor', [AppointmentController::class, 'getdoctor'])->name('getdoctor');
         Route::get('/index', [AppointmentController::class, 'index'])->name('index');
         Route::get('/delete', [AppointmentController::class, 'delete'])->name('delete');
         Route::get('/edit', [AppointmentController::class, 'edit'])->name('edit');
