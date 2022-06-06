@@ -11,4 +11,7 @@ class Doctor extends Model
     protected $fillable = [
         'name', 'email', 'mobile',  'start_time', 'end_time', 'shift',
     ];
+    public function getdoctor(){
+        return $this->hasMany(Schedule::class,);
+    }
 }

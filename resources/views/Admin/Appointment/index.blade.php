@@ -320,7 +320,6 @@
 
     $(document).on('change', '#shift', function() {
         id = $(this).val();
-        
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -328,17 +327,15 @@
             url: '{{route("admin.appointment.getdoctor")}}',
             type: 'get',
             data: {
-                id:id,
+                id: id,
             },
-           
             success: function(data) {
-                alert("success")
-
-            },
-            error: function(data) {
-
-                alert("error");
-            },
+                var list = "";
+                $('#doctor').html('<option value="">Select Doctor</option>');
+                $.each(data, function(key, value) {
+                    $("#doctor").append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+            }
         });
     });
 </script>

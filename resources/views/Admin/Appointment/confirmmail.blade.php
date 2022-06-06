@@ -17,11 +17,11 @@
     <table style="max-width: 600px; width: 600px; margin: 0px auto;" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
-          
+
                 <td style="padding-top: 50px; padding-bottom: 50px;">
                     <table width="100%" height="100%" cellpadding="0" cellspacing="0" align="left">
                         <tbody>
-                    
+
                             <tr>
                                 <td style="padding: 0; background-color: #fff; border-radius: 10px;">
                                     <table style="width: 100%;" cellpadding="0" cellspacing="0">
@@ -32,7 +32,7 @@
                                                         <tr>
                                                             <td align="center" style="padding: 40px 20px; background-color: #999898; border-radius: 10px;">
                                                                 <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5" style=" text-decoration-line:none;">
-                                                                    <h2 class="m-0 text-primary" style="color: black;"><i class="fa fa-book me-3"></i> eHospital</h2>
+                                                                    <h2 class="m-0 text-primary" style="color: black;"><i class="fa fa-book me-3"></i> Sunshine</h2>
                                                                 </a>
                                                             </td>
                                                         </tr>
@@ -51,20 +51,16 @@
                                                         <tr>
                                                             <td style="padding-bottom: 20px;">
                                                                 <p style="font-family: 'Rubik', sans-serif;font-size: 14px; font-weight: 400; line-height: 20px; color: #637b96; margin: 0; letter-spacing: 0.5px; line-height: 24px; ">Dear <b>{{$name}}</b>,<br>
-                                                                 Your An  Appointment has been scheduled with Doctor <b>{{$doctor}}</b>.  <br>
-                                                                   <p style="font-size: 20px;"> <b>Schedule:</b></p>
+                                                                    Your An Appointment has been scheduled with Doctor <b>{{$doctor}}</b>. <br>
+                                                                <p style="font-size: 20px;"> <b>Schedule:</b></p>
                                                                 <b>Date:</b> {{$date}}<br>
                                                                 <b>Startt Time:</b> {{$starttime}}<br>
                                                                 <b>End Time:</b> {{$endtime}}<br>
-                                                                   
-                            
-                                                              
-                            
-                                                               
+
+                                                                <p>your user id is <b>{{$user_name}}</b></p>
+
                                                             </td>
                                                         </tr>
-                                                       
-                                                     
                                                         <tr>
                                                             <td style="padding-bottom: 50px;">
                                                                 <div style="display: block; font-family: 'Rubik', sans-serif;">

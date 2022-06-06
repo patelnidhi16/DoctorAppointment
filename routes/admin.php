@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Appointment\AppointmentController;
 use App\Http\Controllers\Doctor\DoctorController;
+use App\Http\Controllers\Patient\PatientController;
+use App\Http\Controllers\Schedule\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,8 +28,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth:admin'], function () {
 
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/appointmentcount', [AppointmentController::class, 'appointmentcount'])->name('appointmentcount');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    
 
     Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {
         Route::get('/index', [AdminController::class, 'index'])->name('index');
@@ -44,4 +47,27 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/edit', [AppointmentController::class, 'edit'])->name('edit');
         Route::post('/update', [AppointmentController::class, 'update'])->name('update');
     });
+
+    Route::group(['prefix' => 'patient', 'as' => "patient."], function () {
+        Route::post('/create', [PatientController::class, 'create'])->name('create');
+        Route::get('/getdoctor', [PatientController::class, 'getdoctor'])->name('getdoctor');
+        Route::get('/index', [PatientController::class, 'index'])->name('index');
+        Route::get('/delete', [PatientController::class, 'delete'])->name('delete');
+        Route::get('/edit', [PatientController::class, 'edit'])->name('edit');
+        Route::post('/update', [PatientController::class, 'update'])->name('update');
+        Route::get('/getdoctorlist', [PatientController::class, 'getdoctorlist'])->name('getdoctorlist');
+        
+    });
+    Route::group(['prefix' => 'schedule', 'as' => "schedule."], function () {
+        Route::post('/create', [PatientController::class, 'create'])->name('create');
+        Route::get('/getdoctor', [ScheduleController::class, 'getdoctor'])->name('getdoctor');
+        Route::get('/index', [ScheduleController::class, 'index'])->name('index');
+        Route::get('/delete', [ScheduleController::class, 'delete'])->name('delete');
+        Route::get('/edit', [ScheduleController::class, 'edit'])->name('edit');
+        Route::post('/update', [ScheduleController::class, 'update'])->name('update');
+        Route::post('/appointment', [ScheduleController::class, 'appointment'])->name('appointment');
+        Route::get('/getdoctorlists', [ScheduleController::class, 'getdoctorlist'])->name('getdoctorlists');
+        Route::get('/list', [ScheduleController::class, 'list'])->name('list');
+    });
+
 });

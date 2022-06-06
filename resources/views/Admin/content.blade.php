@@ -1,7 +1,7 @@
 @extends('Admin.layouts.master')
 @section('content')
 <div class="content-wrapper">
- 
+
   <div class="row">
     <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
       <div class="card">
@@ -16,72 +16,73 @@
             
           </div>
           
-          <h3 class="mb-0">{{$count}}</h3>
+          <h3 class="mb-0">{{$todayappointmentcount}}</h3>
+         
         </div>
       </div>
-    </div>
-    <!-- <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-      <div class="card">
+      <div class="card ml-4">
         <div class="card-body">
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0">$17.34</h3>
-                <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
+                <h4 class="text-muted font-weight-normal"><b>Total Patient </b></h4>
+                
               </div>
             </div>
-            <div class="col-3">
-              <div class="icon icon-box-success">
-                <span class="mdi mdi-arrow-top-right icon-item"></span>
-              </div>
-            </div>
+            
           </div>
-          <h6 class="text-muted font-weight-normal">Revenue current</h6>
+          
+         
+          <h3 class="mb-0">{{$patientcount}}</h3>
+         
         </div>
       </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-      <div class="card">
+      <div class="card ml-4">
         <div class="card-body">
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0">$12.34</h3>
-                <p class="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
+                <h4 class="text-muted font-weight-normal"><b>Total Doctors</b></h4>
+                
               </div>
             </div>
-            <div class="col-3">
-              <div class="icon icon-box-danger">
-                <span class="mdi mdi-arrow-bottom-left icon-item"></span>
-              </div>
-            </div>
+            
           </div>
-          <h6 class="text-muted font-weight-normal">Daily Income</h6>
+          
+        
+          <h3 class="mb-0">{{$doctorscount}}</h3>
         </div>
       </div>
+     
     </div>
-    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-9">
-              <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0">$31.53</h3>
-                <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="icon icon-box-success ">
-                <span class="mdi mdi-arrow-top-right icon-item"></span>
-              </div>
-            </div>
-          </div>
-          <h6 class="text-muted font-weight-normal">Expense current</h6>
-        </div>
-      </div>
-    </div> -->
+    
   </div>
+  <div class="row">
+    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+      @foreach($doctor_info as $info)
+
+      <div class="card mr-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="d-flex align-items-center align-self-start">
+                <h4 class="text-muted font-weight-normal"><b>Doctor Id:-{{$info->doctor_id}}</b></h4>   
+              </div>
+            </div>
+            
+          </div>
+          
+          Total Appointment:-<h3 class="mb-0">{{$info->total}}</h3>
+         
+        </div>
+      </div>
+    @endforeach
+    
+    </div>
+   
+    
   
+  </div>
   
 
 </div>

@@ -2,15 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\Doctor;
-use Illuminate\Http\Request;
+use App\Models\Patient;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class DoctorDataTable extends DataTable
+class PatientDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -25,30 +24,25 @@ class DoctorDataTable extends DataTable
             ->addColumn('action', function ($user) {
                 $result = '';
                 $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>Delete</button>";
-                $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edits btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
-
+                $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
+                $result .= "<button data-target='#appointment' data-toggle='modal' dataid=' $user->id ' class='rounded schedule btn btn-primary mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Add Appointmet</button>";
+                
                 return $result;
             })
-
-            ->rawColumns(['action'])
+            
+            ->rawColumns([ 'action'])
             ->addIndexColumn();
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Doctor $model
+     * @param \App\Models\Patient $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Doctor $model, Request $request)
+    public function query(Patient $model)
     {
-
-        if ($request->shift) {
-
-            return $model->where('shift', $request->shift);
-        } else {
-            return $model->newQuery();
-        }
+        return $model->newQuery();
     }
 
     /**
@@ -59,18 +53,18 @@ class DoctorDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('doctor-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->dom('Bfrtip')
-            ->orderBy(1)
-            ->buttons(
-                Button::make('create'),
-                Button::make('export'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            );
+                    ->setTableId('patient-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->dom('Bfrtip')
+                    ->orderBy(1)
+                    ->buttons(
+                        Button::make('create'),
+                        Button::make('export'),
+                        Button::make('print'),
+                        Button::make('reset'),
+                        Button::make('reload')
+                    );
     }
 
     /**
@@ -81,19 +75,17 @@ class DoctorDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id'),
+            Column::make('id')->data('DT_RowIndex'),
+            Column::make('user_name'),
             Column::make('name'),
+
             Column::make('email'),
             Column::make('mobile'),
-            Column::make('shift'),
-            Column::make('start_time'),
-            Column::make('end_time'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
-
         ];
     }
 
@@ -104,6 +96,6 @@ class DoctorDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Doctor_' . date('YmdHis');
+        return 'Patient_' . date('YmdHis');
     }
 }

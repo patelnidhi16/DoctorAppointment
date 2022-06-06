@@ -2,16 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\Appointment;
-use App\Models\Doctor;
-use Illuminate\Http\Request;
+use App\Models\Schedule;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AppointmentDataTable extends DataTable
+class ScheduleDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -26,36 +24,24 @@ class AppointmentDataTable extends DataTable
             ->addColumn('action', function ($user) {
                 $result = '';
                 $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>Delete</button>";
-                $result .= "<button data-target='#createapointment' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
+                $result .= "<button data-target='#appointment' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
 
                 return $result;
             })
 
-            ->rawColumns(['action'])
+            ->rawColumns(['image', 'action'])
             ->addIndexColumn();
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Appointment $model
+     * @param \App\Models\Schedule $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Appointment $model, Request $request)
+    public function query(Schedule $model)
     {
-        $doctor = $request->doctor;
-        $name = Doctor::where('name', $doctor)->get()->toArray();
-        $date = Appointment::where('date', $request->date)->get('date')->toArray();
-        if ($name && $date) {
-            return $model->where('doctor_id',  $name[0]['id'])->where('date', $date[0]['date']);
-        } elseif ($name) {
-            return $model->where('doctor_id',  $name[0]['id']);
-        } elseif ($date) {
-
-            return $model->where('date', $date[0]['date']);
-        } else {
-            return $model->newQuery();
-        }
+        return $model->newQuery();
     }
 
     /**
@@ -66,7 +52,7 @@ class AppointmentDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('appointment-table')
+            ->setTableId('schedule-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -88,14 +74,14 @@ class AppointmentDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('email'),
-            Column::make('mobile'),
+            Column::make('id')->data('DT_RowIndex'),
+            Column::make('user_id'),
             Column::make('doctor_id'),
+            Column::make('shift'),
             Column::make('date'),
             Column::make('start_time'),
             Column::make('end_time'),
+           
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -111,6 +97,6 @@ class AppointmentDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Appointment_' . date('YmdHis');
+        return 'Schedule_' . date('YmdHis');
     }
 }

@@ -21,7 +21,6 @@ class LoginController extends BaseController
             'mobile' => 'required|digits:10|unique:users',
         ]);
         if ($validator->fails()) {
-           
             return $this->sendError('validation error', $validator->errors()->all(), 404);
         }
         $request['password'] = Hash::make($request['password']);

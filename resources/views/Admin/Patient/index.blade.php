@@ -17,16 +17,12 @@
       <!-- Button trigger modal -->
 
       <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false">
-        Add Doctor
+        Add Patient
       </button>
       <!-- Modal -->
       <div class="card">
         <div class="card-body">
-          <select class="form-control col-2 ml-5" id="shift_filter" name="date">
-            <option value=" ">Select Date </option>
-            <option value="1">Morning</option>
-            <option value="2">Evening</option>
-          </select>
+
           {!! $dataTable->table(['class' => 'table table-striped zero-configuration dataTable']) !!}
         </div>
       </div>
@@ -36,7 +32,7 @@
 </div>
 @endsection
 @section('modal')
-@include('Admin.Doctor.create')
+@include('Admin.Patient.create')
 @endsection
 
 
@@ -48,26 +44,14 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {!! $dataTable->scripts() !!}
 <script>
-   $('#doctor-table').on('preXhr.dt', function(e, settings, data) {
-        data.shift = $('#shift_filter').val();
-      
-        console.log(data.doctor);
-        // data.title = $('#title_filter').val();
-        console.log(data);
-    });
-    $(document).on('change', '#shift_filter', function() {
-        window.LaravelDataTables['doctor-table'].draw();
-
-    });
+ 
   $(document).on('click', '.add', function() {
 
-    $(document).find('#editdoctor').attr('id', 'createdoctor');
-    $('#createdoctor').trigger('reset');
 
     $(document).on('click', '#submit', function() {
 
       $('.error').html("");
-      $('#createdoctor').validate({
+      $('#createpatient').validate({
         rules: {
           name: {
             required: true,
@@ -80,12 +64,7 @@
             required: true,
           },
 
-          start_time: {
-            required: true,
-          },
-          end_time: {
-            required: true,
-          },
+
         },
         submitHandler: function(form) {
 
@@ -93,7 +72,7 @@
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{route("admin.doctor.create")}}',
+            url: '{{route("admin.patient.create")}}',
             type: 'post',
             data: new FormData(form),
             processData: false,
@@ -103,8 +82,7 @@
 
               $('.modal-backdrop').remove();
               swal("data inserted successfully");
-              window.LaravelDataTables["doctor-table"].draw();
-
+              window.LaravelDataTables["patient-table"].draw();
             },
             error: function(data) {
               console.log(data);
@@ -113,7 +91,7 @@
               $.each(errors.errors, function(key, value) {
                 console.log(key);
                 console.log(value);
-                $('#createdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                $('#createpatient').find('[name=' + key + ']').nextAll('span').html(value[0]);
               });
             },
           });
@@ -122,6 +100,100 @@
     });
 
   });
+  $(document).on('click', '.schedule', function() {
+    var user_id = $(this).attr('dataid');
+
+    $(document).on('click', '#submit', function() {
+
+      $('#addappointment').validate({
+        rules: {
+          date: {
+            required: true,
+          },
+          start_time: {
+            required: true,
+          },
+          end_time: {
+            required: true,
+          },
+          date: {
+            required: true,
+          },
+          shift: {
+            required: true,
+          },
+
+
+        },
+        submitHandler: function(form) {
+          $('#addappointment').find('#user_id').val(user_id);
+          $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{route("admin.schedule.create")}}',
+            type: 'post',
+            data: new FormData(form),
+            processData: false,
+            contentType: false,
+            success: function(data) {
+              if (data.status == false) {
+                swal(data.msg);
+              } else {
+                $('.modal-backdrop').remove();
+                $('.modal').remove();
+                swal({
+                  title: "Good job!",
+                  text: data.msg,
+                  type: "success",
+                  button: "Aww yiss!",
+                  timer: 5000
+                });
+
+                window.LaravelDataTables["patient-table"].draw();
+              }
+            },
+            error: function(data) {
+              console.log(data);
+              var errors = $.parseJSON(data.responseText);
+
+              $.each(errors.errors, function(key, value) {
+                console.log(key);
+                console.log(value);
+                $('#addappointment').find('[name=' + key + ']').nextAll('span').html(value[0]);
+              });
+            },
+          });
+        }
+      });
+    });
+  });
+
+  $(document).on('change', '#shift', function() {
+    id = $(this).val();
+
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '{{route("admin.patient.getdoctorlist")}}',
+      type: 'get',
+      data: {
+        id: id,
+      },
+
+      success: function(data) {
+        var list = "";
+        $('#doctor').html('<option value="">Select Doctor</option>');
+        $.each(data, function(key, value) {
+          $("#doctor").append('<option value="' + value.id + '">' + value.name + '</option>');
+        });
+
+      }
+
+    });
+  });
+
   $(document).on('click', '.delete', function() {
     id = $(this).attr('dataid');
     swal({
@@ -137,7 +209,7 @@
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{route("admin.doctor.delete")}}',
+            url: '{{route("admin.patient.delete")}}',
             type: 'GET',
             data: {
               id: id
@@ -155,41 +227,37 @@
           swal("Your imaginary file is safe!");
         }
       });
+
   });
 
-  $(document).on('click', '.edits', function() {
-    // $('body').addClass('modal-open');
-    // $('body').addClass('modal-open');
-    // $('#exampleModal').addClass('modal fade show');
+  $(document).on('click', '.edit', function() {
     $('.error').html("");
     $('.form-control').removeClass('error');
-    $(document).find('#createdoctor').attr('id', 'editdoctor');
+    $(document).find('#createpatient').attr('id', 'editpatient');
     var id = $(this).attr('dataid');
+
+    // $('.address,#remove').parent().remove();
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      url: '{{route("admin.doctor.edit")}}',
+      url: '{{route("admin.patient.edit")}}',
       type: 'get',
       data: {
         id: id
       },
       success: function(data) {
-        console.log(data);
         $('#id').val(data.id);
         $('#name').val(data.name);
         $('#email').val(data.email);
-        $('#password').val(data.password);
         $('#mobile').val(data.mobile);
-        $('#shift').val(data.shift);
-        $('#start_time').val(data.start_time);
-        $('#end_time').val(data.end_time);
       }
     });
   });
+
   $(document).on('click', '#submit', function() {
 
-    $('#editdoctor').validate({
+    $('#editpatient').validate({
       rules: {
         name: {
           required: true,
@@ -203,15 +271,9 @@
           required: true,
         },
 
-        start_time: {
-          required: true,
-        },
-        end_time: {
-          required: true,
-        },
+
       },
       submitHandler: function(form) {
-        //  
         swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -225,28 +287,23 @@
                 headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '{{route("admin.doctor.update")}}',
+                url: '{{route("admin.patient.create")}}',
                 type: 'post',
                 data: new FormData(form),
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                  // $('body').removeClass('modal-open');
                   $('#exampleModal').hide();
                   $('.modal-backdrop').remove();
                   swal("your data updated successfully");
-                  window.LaravelDataTables["doctor-table"].draw();
-
+                  window.LaravelDataTables["patient-table"].draw();
                 },
                 error: function(data) {
-
-                  console.log(data);
                   var errors = $.parseJSON(data.responseText);
-
                   $.each(errors.errors, function(key, value) {
                     console.log(key);
                     console.log(value);
-                    $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                    $('#editpatient').find('[name=' + key + ']').nextAll('span').html(value[0]);
                   });
                 },
               });

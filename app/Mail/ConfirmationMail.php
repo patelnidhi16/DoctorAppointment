@@ -16,9 +16,10 @@ class ConfirmationMail extends Mailable
      *
      * @return void
      */
-    public function __construct($name, $doctor, $date, $starttime, $endtime)
+    public function __construct($name,$user_name, $doctor, $date, $starttime, $endtime)
     {
         $this->name=$name;
+        $this->user_name=$user_name;
         $this->doctor=$doctor;
         $this->date=$date;
         $this->starttime=$starttime;
@@ -33,6 +34,6 @@ class ConfirmationMail extends Mailable
     public function build()
     {
    
-        return $this->view('Admin.Appointment.confirmmail')->with('name',$this->name)->with('doctor',$this->doctor)->with('date',$this->date)->with('starttime',$this->starttime)->with('endtime',$this->endtime);
+        return $this->view('Admin.Appointment.confirmmail')->with('name',$this->name)->with('user_name',$this->user_name)->with('doctor',$this->doctor)->with('date',$this->date)->with('starttime',$this->starttime)->with('endtime',$this->endtime);
     }
 }
