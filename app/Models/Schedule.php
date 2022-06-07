@@ -9,4 +9,7 @@ class Schedule extends Model
 {
     use HasFactory;
     public $guarded =[];
+    public function getdoctor(){
+        return $this->hasMany(Doctor::class,'id','doctor_id');
+    }
 }

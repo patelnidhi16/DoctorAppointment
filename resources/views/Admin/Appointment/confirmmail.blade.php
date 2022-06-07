@@ -66,7 +66,7 @@
                                                                 <div style="display: block; font-family: 'Rubik', sans-serif;">
                                                                     <p style="font-size: 14px; font-family: 'Rubik', sans-serif; font-weight: 400; line-height: 20px; color: #637b96;margin: 0; letter-spacing: 0.5px; line-height: 24px;">
                                                                         Warm regards,</p>
-                                                                    <h6 style="font-family: 'Rubik', sans-serif;margin:0;font-size: 15px; font-weight: 600; color: #1e2e50;">Elearning</h6>
+                                                                    <h6 style="font-family: 'Rubik', sans-serif;margin:0;font-size: 15px; font-weight: 600; color: #1e2e50;">Sunshine</h6>
                                                                 </div>
                                                             </td>
                                                         </tr>

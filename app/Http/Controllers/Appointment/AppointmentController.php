@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Appointment;
 
 use App\DataTables\AppointmentDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Appointment as RequestsAppointment;
 use App\Interfaces\AppointmentInterface;
 use App\Mail\ConfirmationMail;
 use App\Models\Appointment;
@@ -27,18 +28,9 @@ class AppointmentController extends Controller
         $appointment = Appointment::groupby('date')->get(['date']);
         return $AppointmentDataTable->render('Admin.Appointment.index', compact('doctors', 'appointment'));
     }
-    public function create(Request $request)
+    public function create(RequestsAppointment $request)
     {
-        $request->validate([
-            'name' => 'required|alpha|min:2',
-            'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i|unique:doctors,email,' . $request->id,
-            'mobile' => 'required|digits:10|unique:doctors,mobile,' . $request->id,
-            'shift' => 'required',
-            'doctor_id' => 'required',
-            'date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required|after:start_time',
-        ]);
+      
         $appointment =  $this->appointment->appointment($request->all());
         return $appointment;
     }
@@ -58,12 +50,7 @@ class AppointmentController extends Controller
 
         return $data;
     }
-    public function appointmentcount()
-    {
-        $appointment = Appointment::whereDate('created_at', Carbon::today())->get();
-        $count = count($appointment);
-    }
-
+   
     public function getdoctor(Request $request)
     {
         $doctors = Doctor::where('shift', $request->id)->get()->toArray();

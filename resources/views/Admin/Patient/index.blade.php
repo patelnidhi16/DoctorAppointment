@@ -16,8 +16,9 @@
     <div class="card-body">
       <!-- Button trigger modal -->
 
-      <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false">
-        Add Patient
+      <button type="button" title="Add Patient" class="btn btn-primary add" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false">
+    
+      <span class="iconify" data-icon="carbon:user-avatar-filled" data-width="20" data-height="20"></span>
       </button>
       <!-- Modal -->
       <div class="card">
@@ -42,18 +43,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 {!! $dataTable->scripts() !!}
 <script>
- 
+  $(function() {
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if (month < 10)
+      month = '0' + month.toString();
+    if (day < 10)
+      day = '0' + day.toString();
+
+    var minDate = year + '-' + month + '-' + day;
+
+    $('#date').attr('min', minDate);
+  });
   $(document).on('click', '.add', function() {
+    $('#createpatient').trigger('reset');
 
-
+    $('.error').html("");
     $(document).on('click', '#submit', function() {
 
       $('.error').html("");
       $('#createpatient').validate({
         rules: {
-          name: {
+          first_name: {
+            required: true,
+          },
+          last_name: {
             required: true,
           },
           email: {
@@ -81,7 +101,7 @@
               $('#exampleModal').hide();
 
               $('.modal-backdrop').remove();
-              swal("data inserted successfully");
+              swal("patient inserted successfully");
               window.LaravelDataTables["patient-table"].draw();
             },
             error: function(data) {
@@ -98,9 +118,12 @@
         }
       });
     });
-
   });
   $(document).on('click', '.schedule', function() {
+    $('#addappointment').trigger('reset');
+
+    $('.error').html("");
+    $('.form-control').removeClass('error');
     var user_id = $(this).attr('dataid');
 
     $(document).on('click', '#submit', function() {
@@ -138,6 +161,7 @@
             contentType: false,
             success: function(data) {
               if (data.status == false) {
+                $('span.error ').html("");
                 swal(data.msg);
               } else {
                 $('.modal-backdrop').remove();
@@ -218,7 +242,7 @@
               swal("Poof! Your imaginary file has been deleted!", {
                 icon: "success",
               });
-              window.LaravelDataTables["doctor-table"].draw();
+              window.LaravelDataTables["patient-table"].draw();
 
 
             }
@@ -247,8 +271,13 @@
         id: id
       },
       success: function(data) {
+        var name = data.name;
+
+        var first_name = name.split(' ')[0];
+        var last_name = name.split(' ')[1];
         $('#id').val(data.id);
-        $('#name').val(data.name);
+        $('#first_name').val(first_name);
+        $('#last_name').val(last_name);
         $('#email').val(data.email);
         $('#mobile').val(data.mobile);
       }

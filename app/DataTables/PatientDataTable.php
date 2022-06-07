@@ -23,9 +23,10 @@ class PatientDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('action', function ($user) {
                 $result = '';
-                $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>Delete</button>";
-                $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
-                $result .= "<button data-target='#appointment' data-toggle='modal' dataid=' $user->id ' class='rounded schedule btn btn-primary mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Add Appointmet</button>";
+                $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'><span class='iconify' data-icon='ant-design:delete-filled'></span></button>";
+                $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' > <span class='iconify' data-icon='ant-design:edit-filled'  data-height='19'></span></button>";
+                $result .= "<button data-target='#appointment' data-toggle='modal' dataid=' $user->id ' class='rounded schedule btn btn-primary mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' title='Add Appointmet'>
+                <span class='iconify' data-icon='carbon:add-filled'></span></button>";
                 
                 return $result;
             })

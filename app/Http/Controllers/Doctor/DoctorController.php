@@ -2,34 +2,37 @@
 
 namespace App\Http\Controllers\Doctor;
 
+use App\DataTables\DoctorDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DoctorRequest;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DoctorController extends Controller
 {
-    public function create(Request $request)
+    public function index(DoctorDataTable $doctorDataTable)
     {
-        $request->validate([
-            'name' => 'required|alpha|min:2',
-            'email' => 'required|email|unique:doctors|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
-            'mobile' => 'required|digits:10|unique:doctors',
-            'shift' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required|after:start_time',
-        ]);
-
-        Doctor::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'mobile' => $request->mobile,
-            'shift' => $request->shift,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-        ]);
+        return $doctorDataTable->render('Admin.Doctor.index');
     }
+    public function create(DoctorRequest $request)
+    {
+        Doctor::updateOrCreate(
+            [
+                'id' => $request->id,
+            ],
+            [
+                'name' => ucfirst($request->first_name) . " " . ucfirst($request->last_name),
+                'email' => $request->email,
+                'password' => $request->password,
+                'mobile' => $request->mobile,
+                'shift' => $request->shift,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
 
+            ]
+        );
+    }
 
     public function delete(Request $request)
     {
@@ -42,31 +45,9 @@ class DoctorController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-
         $data = Doctor::find($id);
-
         return $data;
     }
 
-    public function update(Request $request)
-    {
-        $id = $request->id;
-        
-        $request->validate([
-            'name' => 'required|alpha|min:2',
-            'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i|unique:doctors,email,'.$request->id,
-            'mobile' => 'required|numeric|digits:10|unique:doctors,mobile,'.$request->id,
-            'shift' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required|after:start_time',
-        ]);
-        Doctor::where("id", $id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile' => $request->mobile,
-            'shift' => $request->shift,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-        ]);
-    }
+   
 }

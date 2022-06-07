@@ -33,7 +33,6 @@ class ConfirmationMail extends Mailable
      */
     public function build()
     {
-   
         return $this->view('Admin.Appointment.confirmmail')->with('name',$this->name)->with('user_name',$this->user_name)->with('doctor',$this->doctor)->with('date',$this->date)->with('starttime',$this->starttime)->with('endtime',$this->endtime);
     }
 }

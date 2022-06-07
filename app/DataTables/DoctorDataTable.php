@@ -24,9 +24,12 @@ class DoctorDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('action', function ($user) {
                 $result = '';
-                $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>Delete</button>";
-                $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edits btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >Edit</button>";
-
+                $result .= "<button dataid='$user->id' class='rounded delete btn btn-danger mr-2 ' style='height:40px'>
+                <span class='iconify' data-icon='ant-design:delete-filled'></span>
+                </button>";
+                $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edits btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >
+                <span class='iconify' data-icon='ant-design:edit-filled'  data-height='19'></span></button>";
+                
                 return $result;
             })
 
@@ -81,7 +84,7 @@ class DoctorDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id'),
+            Column::make('id')->data('DT_RowIndex'),
             Column::make('name'),
             Column::make('email'),
             Column::make('mobile'),

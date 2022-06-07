@@ -17,7 +17,7 @@
       <!-- Button trigger modal -->
 
       <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false">
-        Add Doctor
+      <span class="iconify" data-icon="carbon:add-filled" data-width="20" data-height="20"></span>
       </button>
       <!-- Modal -->
       <div class="card">
@@ -46,21 +46,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 {!! $dataTable->scripts() !!}
 <script>
-   $('#doctor-table').on('preXhr.dt', function(e, settings, data) {
-        data.shift = $('#shift_filter').val();
-      
-        console.log(data.doctor);
-        // data.title = $('#title_filter').val();
-        console.log(data);
-    });
-    $(document).on('change', '#shift_filter', function() {
-        window.LaravelDataTables['doctor-table'].draw();
+  $('#doctor-table').on('preXhr.dt', function(e, settings, data) {
+    data.shift = $('#shift_filter').val();
 
-    });
+    console.log(data.doctor);
+    // data.title = $('#title_filter').val();
+    console.log(data);
+  });
+  $(document).on('change', '#shift_filter', function() {
+    window.LaravelDataTables['doctor-table'].draw();
+
+  });
   $(document).on('click', '.add', function() {
-
+    $('.error').html("");
     $(document).find('#editdoctor').attr('id', 'createdoctor');
     $('#createdoctor').trigger('reset');
 
@@ -69,7 +70,10 @@
       $('.error').html("");
       $('#createdoctor').validate({
         rules: {
-          name: {
+          first_name: {
+            required: true,
+          },
+          last_name: {
             required: true,
           },
           email: {
@@ -175,9 +179,13 @@
         id: id
       },
       success: function(data) {
-        console.log(data);
+        var name=data.name;
+        
+        var first_name=name.split(' ')[0];
+        var last_name=name.split(' ')[1];
         $('#id').val(data.id);
-        $('#name').val(data.name);
+        $('#first_name').val(first_name);
+        $('#last_name').val(last_name);
         $('#email').val(data.email);
         $('#password').val(data.password);
         $('#mobile').val(data.mobile);
@@ -191,7 +199,10 @@
 
     $('#editdoctor').validate({
       rules: {
-        name: {
+        first_name: {
+          required: true,
+        },
+        last_name: {
           required: true,
         },
         email: {
@@ -225,18 +236,16 @@
                 headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '{{route("admin.doctor.update")}}',
+                url: '{{route("admin.doctor.create")}}',
                 type: 'post',
                 data: new FormData(form),
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                  // $('body').removeClass('modal-open');
                   $('#exampleModal').hide();
                   $('.modal-backdrop').remove();
                   swal("your data updated successfully");
                   window.LaravelDataTables["doctor-table"].draw();
-
                 },
                 error: function(data) {
 

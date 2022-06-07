@@ -13,7 +13,7 @@ class LoginController extends BaseController
 {
     public function register(Request $request)
     {
-      
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -26,19 +26,25 @@ class LoginController extends BaseController
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
         $user->token = $user->createToken('MyApp')->accessToken;
-       
+
         return $this->sendresponse($user, 'User Register successfully.', 200);
     }
     public function login(Request $request)
     {
+     
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ]);
+
         $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user['password'])) {
+        if (!$user) {
             return response([
-                'message' => ['These Password and Email does not match.']
+                'message' => ['These Email does not match with database.']
+            ]);
+        } else if (!Hash::check($request->password, $user['password'])) {
+            return response([
+                'message' => ['Please enterCorrect Password ']
             ]);
         }
         $user->token = $user->createToken('MyApp')->accessToken;
@@ -54,9 +60,7 @@ class LoginController extends BaseController
             $user->save();
             return $this->sendResponse($user, 'user logout Succesfully.', 200);
         } else {
-            return $this->sendResponse($user, 'You are not logout..Please try again.', 422);
+            return $this->sendResponse($user, 'You are not login.Please login once then logout', 422);
         }
     }
 }
-
-

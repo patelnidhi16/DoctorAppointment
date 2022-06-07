@@ -40,6 +40,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 {!! $dataTable->scripts() !!}
 <script>
   $(document).ready(function() {
@@ -51,12 +52,27 @@
       type: 'get',
       success: function(data) {
         var list = "";
-      
+
         $('#doctor').html('<option value="">Select Doctor</option>');
         $.each(data, function(key, value) {
           $("#doctor").append('<option value="' + value.id + '">' + value.name + '</option>');
         });
       }
+    });
+    $(function() {
+      var dtToday = new Date();
+
+      var month = dtToday.getMonth() + 1;
+      var day = dtToday.getDate();
+      var year = dtToday.getFullYear();
+      if (month < 10)
+        month = '0' + month.toString();
+      if (day < 10)
+        day = '0' + day.toString();
+
+      var minDate = year + '-' + month + '-' + day;
+
+      $('#date').attr('min', minDate);
     });
     $(document).on('click', '.delete', function() {
       id = $(this).attr('dataid');
@@ -183,13 +199,15 @@
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   },
-                  url: '{{route("admin.schedule.update")}}',
+                  url: '{{route("admin.schedule.create")}}',
                   type: 'post',
                   data: new FormData(form),
                   processData: false,
                   contentType: false,
                   success: function(data) {
+                 
                     if (data.status == false) {
+                      $('span.error').html("");
                       swal(data.msg);
                     } else {
                       $('.modal').remove();

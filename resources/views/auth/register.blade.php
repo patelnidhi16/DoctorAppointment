@@ -75,6 +75,10 @@ http://www.tooplate.com/view/2098-health
                                 <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Your Mobile No">
                                 <span class="error"></span>
                             </div>
+                            <div>
+                                You have Allredy Account? <a href="/login">Login</a>
+
+                            </div>
                             <button type="submit" class="form-control" id="cf-submit" name="submit">Register</button>
                         </div>
                     </form>
@@ -83,8 +87,6 @@ http://www.tooplate.com/view/2098-health
             </div>
         </div>
     </section>
-
-
     <!-- SCRIPTS -->
     <script src="{{asset('front/js/jquery.js')}}"></script>
     <script src="{{asset('front/js/bootstrap.min.js')}}"></script>

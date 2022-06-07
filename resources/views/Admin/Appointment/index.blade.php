@@ -142,6 +142,7 @@
                         success: function(data) {
                             console.log(data.status);
                             if (data.status == false) {
+                                $('span.error ').html("");
                                 swal(data.msg);
                             } else {
                                 $('.modal').remove();
@@ -286,6 +287,7 @@
                                 success: function(data) {
                                     console.log(data.status);
                                     if (data.status == false) {
+                                        $('span.error').html("");
                                         swal(data.msg);
                                     } else {
                                         $('.modal').remove();
