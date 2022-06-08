@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Appointment\AppointmentController;
 use App\Http\Controllers\Doctor\DoctorController;
+use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\Patient\PatientController;
 use App\Http\Controllers\Schedule\ScheduleController;
 use App\Jobs\Info;
@@ -26,12 +27,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+/// demo multiple select and pdf export
+Route::get('/queue',function(){
+    dispatch(new Info())->delay(now()); 
+    });
+Route::get('/formexample', [ExampleController::class, 'formexample'])->name('formexample');
+Route::get('/example', [ExampleController::class, 'example'])->name('example');
+Route::post('/examplestore', [ExampleController::class, 'examplestore'])->name('examplestore');
+Route::get('/exampleedit/{id}', [ExampleController::class, 'exampleedit'])->name('exampleedit');
+Route::get('student_export', [ExampleController::class, 'get_student_data'])->name('student.export');
 
-// Route::get('/queue',function(){
-//     dispatch(new Info())->delay(now()); 
-//     });
+// 
 Route::group(['middleware' => 'auth:admin'], function () {
-
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {
@@ -55,7 +62,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/delete', [PatientController::class, 'delete'])->name('delete');
         Route::get('/edit', [PatientController::class, 'edit'])->name('edit');
         Route::get('/getdoctorlist', [PatientController::class, 'getdoctorlist'])->name('getdoctorlist');
-        
     });
     Route::group(['prefix' => 'schedule', 'as' => "schedule."], function () {
         Route::post('/create', [ScheduleController::class, 'create'])->name('create');
@@ -66,5 +72,4 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/getdoctorlists', [ScheduleController::class, 'getdoctorlist'])->name('getdoctorlists');
         Route::get('/list', [ScheduleController::class, 'list'])->name('list');
     });
-
 });

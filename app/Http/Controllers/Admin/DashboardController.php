@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\ExampleDataTable;
+use App\Exports\StudentExport;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
+use App\Models\Example;
 use App\Models\Patient;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -22,11 +26,10 @@ class DashboardController extends Controller
         $patientcount = count($patients);
         $doctors = Doctor::get();
         $doctorscount = count($doctors);
-        $doctor_info =Schedule::with('getdoctor')->groupBy('doctor_id')->select('doctor_id', DB::raw('count(*) as total'))->get()->toArray();
-        $today_doctor_info =Schedule::with('getdoctor')->whereDate('date', Carbon::today())->groupBy('doctor_id')->select('doctor_id', DB::raw('count(*) as total'))->get()->toArray();
-            
-        return view('Admin.content', compact('todayappointmentcount', 'patientcount', 'doctorscount','doctor_info','today_doctor_info','totalappointmentcount'));
+        $doctor_info = Schedule::with('getdoctor')->groupBy('doctor_id')->select('doctor_id', DB::raw('count(*) as total'))->get()->toArray();
+        $today_doctor_info = Schedule::with('getdoctor')->whereDate('date', Carbon::today())->groupBy('doctor_id')->select('doctor_id', DB::raw('count(*) as total'))->get()->toArray();
+
+        return view('Admin.content', compact('todayappointmentcount', 'patientcount', 'doctorscount', 'doctor_info', 'today_doctor_info', 'totalappointmentcount'));
     }
-
+    
 }
-

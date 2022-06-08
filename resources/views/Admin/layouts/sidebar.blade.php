@@ -4,7 +4,7 @@
           <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="{{asset('admin/assets/images/logo-mini.svg')}}" alt="logo" /></a>
         </div>
         <ul class="nav">
-          <!-- <li class="nav-item profile">
+          <li class="nav-item profile">
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
@@ -55,7 +55,7 @@
           </li>
           <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
-          </li> -->
+          </li>
           <li class="nav-item menu-items {{ request()->is('*dashboard*') ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.dashboard')}}">
               <span class="menu-icon">

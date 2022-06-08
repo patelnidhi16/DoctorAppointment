@@ -68,13 +68,9 @@
         console.log(data);
     });
     $(document).on('change', '#doctor_filter', function() {
-
         window.LaravelDataTables['appointment-table'].draw();
-
-
     });
     $(document).on('change', '#date_filter', function() {
-
         window.LaravelDataTables['appointment-table'].draw();
 
     });

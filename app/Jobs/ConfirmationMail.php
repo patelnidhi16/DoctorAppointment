@@ -32,7 +32,6 @@ class ConfirmationMail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to('nidhipatel1632001@gmail.com')->send(new MailConfirmationMail());
-        
+        Mail::to('nidhipatel1632001@gmail.com')->send(new MailConfirmationMail('','','','','',''));
     }
 }

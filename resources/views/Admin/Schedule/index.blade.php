@@ -224,7 +224,7 @@
                     $.each(errors.errors, function(key, value) {
                       console.log(key);
                       console.log(value);
-                      $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                      $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value);
                     });
                   },
                 });

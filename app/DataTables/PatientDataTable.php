@@ -30,7 +30,6 @@ class PatientDataTable extends DataTable
                 
                 return $result;
             })
-            
             ->rawColumns([ 'action'])
             ->addIndexColumn();
     }
