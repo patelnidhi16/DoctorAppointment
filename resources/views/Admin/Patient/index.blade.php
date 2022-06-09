@@ -17,8 +17,8 @@
       <!-- Button trigger modal -->
 
       <button type="button" title="Add Patient" class="btn btn-primary add" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false">
-    
-      <span class="iconify" data-icon="carbon:user-avatar-filled" data-width="20" data-height="20"></span>
+
+        <span class="iconify" data-icon="carbon:user-avatar-filled" data-width="20" data-height="20"></span>
       </button>
       <!-- Modal -->
       <div class="card">
@@ -86,6 +86,20 @@
 
 
         },
+       messages:{
+         first_name:{
+           required:"First name is required field",
+         },
+         last_name:{
+           required:"Last name is required field",
+         },
+         email:{
+           required:"Email  is required field",
+         },
+         mobile:{
+           required:"Mobile  is required field",
+         },
+       },
         submitHandler: function(form) {
 
           $.ajax({
@@ -121,7 +135,6 @@
   });
   $(document).on('click', '.schedule', function() {
     $('#addappointment').trigger('reset');
-
     $('.error').html("");
     $('.form-control').removeClass('error');
     var user_id = $(this).attr('dataid');
@@ -139,15 +152,27 @@
           end_time: {
             required: true,
           },
-          date: {
-            required: true,
-          },
+          
           shift: {
             required: true,
           },
 
 
         },
+        messages:{
+         date:{
+           required:"Date name is required field",
+         },
+         start_time:{
+           required:"Start time name is required field",
+         },
+         end_time:{
+           required:"End Time  is required field",
+         },
+         shift:{
+           required:"Shift  is required field",
+         },
+       },  
         submitHandler: function(form) {
           $('#addappointment').find('#user_id').val(user_id);
           $.ajax({
@@ -166,14 +191,11 @@
               } else {
                 $('.modal-backdrop').remove();
                 $('.modal').remove();
-                swal({
-                  title: "Good job!",
-                  text: data.msg,
-                  type: "success",
-                  button: "Aww yiss!",
-                  timer: 5000
-                });
+                swal(data.msg);
 
+                setTimeout(function() {
+                  window.location.reload(1);
+                }, 3000);
                 window.LaravelDataTables["patient-table"].draw();
               }
             },
@@ -288,20 +310,36 @@
 
     $('#editpatient').validate({
       rules: {
-        name: {
-          required: true,
-        },
-        email: {
-          required: true,
-          email: true,
-        },
+          first_name: {
+            required: true,
+          },
+          last_name: {
+            required: true,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          mobile: {
+            required: true,
+          },
 
-        mobile: {
-          required: true,
+
         },
-
-
-      },
+       messages:{
+         first_name:{
+           required:"First name is required field",
+         },
+         last_name:{
+           required:"Last name is required field",
+         },
+         email:{
+           required:"Email  is required field",
+         },
+         mobile:{
+           required:"Mobile  is required field",
+         },
+       },
       submitHandler: function(form) {
         swal({
             title: "Are you sure?",
@@ -324,8 +362,10 @@
                 success: function(data) {
                   $('#exampleModal').hide();
                   $('.modal-backdrop').remove();
-                  swal("your data updated successfully");
+                  swal("patient updated successfully");
+
                   window.LaravelDataTables["patient-table"].draw();
+
                 },
                 error: function(data) {
                   var errors = $.parseJSON(data.responseText);

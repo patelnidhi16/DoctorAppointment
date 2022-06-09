@@ -25,7 +25,7 @@ class DoctorRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'first_name' => 'required|alpha|min:2',
+            'first_name' => 'bail|required|alpha|min:2',
             'last_name' => 'required|alpha|min:2',
             'email' => 'required|email||unique:doctors,mobile,' . $request->id,
             'email' => 'required|unique:doctors,email,' . $request->id.'|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',

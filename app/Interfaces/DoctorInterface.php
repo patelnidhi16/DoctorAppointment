@@ -2,9 +2,9 @@
 
 namespace App\Interfaces;
 
-interface AppointmentInterface
+interface DoctorInterface
 {
     public function create(array $data);
     public function delete(array $data);
-   
+  
 }

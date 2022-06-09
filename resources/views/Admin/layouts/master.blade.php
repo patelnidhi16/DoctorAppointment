@@ -42,13 +42,13 @@
 
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        @include('Admin/layouts/footer')
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+  @include('Admin/layouts/footer')
   @yield('modal')
   <!-- container-scroller -->
   <!-- plugins:js -->
@@ -71,6 +71,7 @@
   <!-- endinject -->
   <!-- Custom js for this page -->
   <script src="{{asset('admin/assets/js/dashboard.js')}}"></script> 
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
    @stack('script')
 
   <!-- End custom js for this page -->

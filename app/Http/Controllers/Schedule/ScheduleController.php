@@ -34,15 +34,14 @@ class ScheduleController extends Controller
         //     'start_time' => 'required',
         //     'end_time' => 'required|after:start_time',
         // ]);
-        $appointment =  $this->appointment->appointment($request->all());
+      
+        $appointment =  $this->appointment->create($request->all());
         return $appointment;
     }
   
       public function delete(Request $request)
     {
-        $id = $request->id;
-        $data = Schedule::find($id);
-        $data->delete();
+        $this->appointment->delete($request->all());
     }
     public function edit(Request $request)
     {

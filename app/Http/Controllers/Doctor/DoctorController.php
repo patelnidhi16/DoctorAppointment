@@ -5,33 +5,26 @@ namespace App\Http\Controllers\Doctor;
 use App\DataTables\DoctorDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
+use App\Interfaces\DoctorInterface;
 use App\Models\Doctor;
+use App\Repositories\DoctorRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class DoctorController extends Controller
 {
+    public function __construct(DoctorInterface $doctor)
+    {
+        $this->doctor = new DoctorRepository($doctor);
+    }
     public function index(DoctorDataTable $doctorDataTable)
     {
         return $doctorDataTable->render('Admin.Doctor.index');
     }
     public function create(DoctorRequest $request)
     {
-        Doctor::updateOrCreate(
-            [
-                'id' => $request->id,
-            ],
-            [
-                'name' => ucfirst($request->first_name) . " " . ucfirst($request->last_name),
-                'email' => $request->email,
-                'password' => $request->password,
-                'mobile' => $request->mobile,
-                'shift' => $request->shift,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-
-            ]
-        );
+       $this->doctor->create($request->all());
+       
     }
 
     public function delete(Request $request)

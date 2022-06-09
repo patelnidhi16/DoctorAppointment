@@ -21,9 +21,9 @@
       </button>
       <!-- Modal -->
       <div class="card">
-        <div class="card-body">
+        <div class="card-body" >
           <select class="form-control col-2 ml-5" id="shift_filter" name="date">
-            <option value=" ">Select Date </option>
+            <option value=" " >Select Shift </option>
             <option value="1">Morning</option>
             <option value="2">Evening</option>
           </select>
@@ -83,6 +83,9 @@
           mobile: {
             required: true,
           },
+          shift: {
+            required: true,
+          },
 
           start_time: {
             required: true,
@@ -91,6 +94,30 @@
             required: true,
           },
         },
+        
+       messages:{
+         first_name:{
+           required:"First name is required field",
+         },
+         shift:{
+           required:"Shift is required field",
+         },
+         last_name:{
+           required:"Last name is required field",
+         },
+         email:{
+           required:"Email  is required field",
+         },
+         mobile:{
+           required:"Mobile  is required field",
+         },
+         start_time:{
+           required:"Start time  is required field",
+         },
+         end_time:{
+           required:"End time  is required field",
+         },
+       },
         submitHandler: function(form) {
 
           $.ajax({
@@ -104,9 +131,8 @@
             contentType: false,
             success: function(data) {
               $('#exampleModal').hide();
-
               $('.modal-backdrop').remove();
-              swal("data inserted successfully");
+              swal("doctor inserted successfully");
               window.LaravelDataTables["doctor-table"].draw();
 
             },
@@ -199,28 +225,54 @@
 
     $('#editdoctor').validate({
       rules: {
-        first_name: {
-          required: true,
-        },
-        last_name: {
-          required: true,
-        },
-        email: {
-          required: true,
-          email: true,
-        },
+          first_name: {
+            required: true,
+          },
+          last_name: {
+            required: true,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          mobile: {
+            required: true,
+          },
+          shift: {
+            required: true,
+          },
 
-        mobile: {
-          required: true,
+          start_time: {
+            required: true,
+          },
+          end_time: {
+            required: true,
+          },
         },
-
-        start_time: {
-          required: true,
-        },
-        end_time: {
-          required: true,
-        },
-      },
+        
+       messages:{
+         first_name:{
+           required:"First name is required field",
+         },
+         shift:{
+           required:"Shift is required field",
+         },
+         last_name:{
+           required:"Last name is required field",
+         },
+         email:{
+           required:"Email  is required field",
+         },
+         mobile:{
+           required:"Mobile  is required field",
+         },
+         start_time:{
+           required:"Start time  is required field",
+         },
+         end_time:{
+           required:"End time  is required field",
+         },
+       },
       submitHandler: function(form) {
         //  
         swal({
@@ -242,9 +294,10 @@
                 processData: false,
                 contentType: false,
                 success: function(data) {
+               
                   $('#exampleModal').hide();
                   $('.modal-backdrop').remove();
-                  swal("your data updated successfully");
+                  swal("doctor updated successfully");
                   window.LaravelDataTables["doctor-table"].draw();
                 },
                 error: function(data) {

@@ -31,5 +31,12 @@ class DashboardController extends Controller
 
         return view('Admin.content', compact('todayappointmentcount', 'patientcount', 'doctorscount', 'doctor_info', 'today_doctor_info', 'totalappointmentcount'));
     }
-    
+    public function profile(){
+       return view('Admin.profile');
+    }
+    public function createprofile(Request $request){
+        $request->file('image')->getClientOriginalName();
+       Admin::update([]);
+       return view('Admin.profile');
+    }
 }

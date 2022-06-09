@@ -11,22 +11,18 @@ use Illuminate\Support\Facades\Mail;
 
 class AppointmentRepository implements AppointmentInterface
 {
-    public function appointment(array $data)
+    public function create(array $data)
     {
-
-       
         $patient = Patient::where('id',$data['user_id'])->get()->toArray();
       
         $data['status'] = "success";
         if ($data['id']) {
-
             $start_time = Schedule::where('doctor_id', $data['doctor_id'])->where('id', '!=', $data['id'])->where('date', $data['date'])->get('start_time')->toArray();
             $end_time = Schedule::where('doctor_id', $data['doctor_id'])->where('id', '!=', $data['id'])->where('date', $data['date'])->get('end_time')->toArray();
         } else {
             $start_time = Schedule::where('doctor_id', $data['doctor_id'])->where('date', $data['date'])->get('start_time')->toArray();
             $end_time = Schedule::where('doctor_id', $data['doctor_id'])->where('date', $data['date'])->get('end_time')->toArray();
         }
-
         $doctor = Doctor::where('id', $data['doctor_id'])->get()->toArray();
         if ($data['start_time'] < $doctor[0]['start_time'] ||  $data['end_time'] > $doctor[0]['end_time']) {
             $data['status'] = false;
@@ -87,5 +83,12 @@ class AppointmentRepository implements AppointmentInterface
             Mail::to($email)->send(new ConfirmationMail($patient[0]['name'], $patient[0]['user_name'], $doctor, $date, $starttime, $endtime));
             return $data;
         }
+    }
+    public function delete(array $data){
+    
+        $id = $data['id'];
+        $data = Schedule::find($id);
+        $data->delete();
+        return $data;
     }
 }

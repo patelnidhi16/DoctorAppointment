@@ -15,7 +15,8 @@ class LoginController extends BaseController
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'mobile' => 'required|digits:10|unique:users',
@@ -24,14 +25,18 @@ class LoginController extends BaseController
             return $this->sendError('validation error', $validator->errors()->all(), 404);
         }
         $request['password'] = Hash::make($request['password']);
-        $user = User::create($request->toArray());
+        $user = User::create([
+            'name' => $request->first_name . '' . $request->last_name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'mobile' => $request->mobile,
+        ]);
         $user->token = $user->createToken('MyApp')->accessToken;
 
         return $this->sendresponse($user, 'User Register successfully.', 200);
     }
     public function login(Request $request)
     {
-     
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',

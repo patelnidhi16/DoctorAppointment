@@ -29,11 +29,17 @@ Route::post('/logoutapi', [LoginController::class, 'logout'])->name('logoutapi')
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {
         Route::post('/index', [DoctorController::class, 'index'])->name('index');
+        Route::post('/create', [DoctorController::class, 'create'])->name('create');
+        Route::get('/delete', [DoctorController::class, 'delete'])->name('delete');
     });
     Route::group(['prefix' => 'appointment', 'as' => "appointment."], function () {
-        Route::post('/appointmentapi', [AppointmentController::class, 'appointment'])->name('appointment');
+        Route::post('/create', [AppointmentController::class, 'appointment'])->name('appointment');
+        Route::get('/delete', [AppointmentController::class, 'delete'])->name('delete');
+        Route::get('/index', [AppointmentController::class, 'index'])->name('index');
     });
     Route::group(['prefix' => 'patient', 'as' => "patient."], function () {
-        Route::post('/patientapi', [PatientController::class, 'patient'])->name('patient');
+        Route::get('/index', [PatientController::class, 'index'])->name('index');
+        Route::get('/delete', [PatientController::class, 'delete'])->name('delete');
+        Route::post('/create', [PatientController::class, 'create'])->name('create');
     });
 });

@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
 /// demo multiple select and pdf export
 Route::get('/queue',function(){
     dispatch(new Info())->delay(now()); 
@@ -38,8 +41,12 @@ Route::get('/exampleedit/{id}', [ExampleController::class, 'exampleedit'])->name
 Route::get('student_export', [ExampleController::class, 'get_student_data'])->name('student.export');
 
 // 
+
+
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::post('/profile', [DashboardController::class, 'createprofile'])->name('createprofile');
 
     Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {
         Route::get('/index', [DoctorController::class, 'index'])->name('index');

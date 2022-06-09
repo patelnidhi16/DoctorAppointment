@@ -21083,7 +21083,7 @@ code {
 /* Footer */
 
 .footer {
-    background: #000000;
+    background: #14060600;
     padding: 20px 1rem;
     transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
@@ -28648,7 +28648,7 @@ div.tagsinput span.tag a {
 
 .sidebar {
     min-height: calc(100vh - 70px);
-    background: #000000;
+    background: #14060600 !important;
     font-weight: normal;
     padding: 0;
     width: 244px;

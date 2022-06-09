@@ -99,8 +99,6 @@
                   icon: "success",
                 });
                 window.LaravelDataTables["schedule-table"].draw();
-
-
               }
             });
           } else {
@@ -184,6 +182,27 @@
 
 
         },
+       
+        
+       messages:{
+         
+         shift:{
+           required:"Shift is required field",
+         },
+         doctor_id:{
+           required:"Doctor name is required field",
+         },
+         date:{
+           required:"Date  is required field",
+         },
+        
+         start_time:{
+           required:"Start time  is required field",
+         },
+         end_time:{
+           required:"End time  is required field",
+         },
+       },
         submitHandler: function(form) {
           //  
           swal({

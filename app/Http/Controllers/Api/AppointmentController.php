@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Interfaces\AppointmentInterface;
 use App\Mail\ConfirmationMail;
+use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Schedule;
@@ -19,10 +20,9 @@ class AppointmentController extends BaseController
     {
         $this->appointment = new AppointmentRepository($appointment);
     }
-    public function appointment(Request $request)
+    public function create(Request $request)
     {
        
-
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|numeric',
             'shift' => 'required|numeric',
@@ -38,4 +38,16 @@ class AppointmentController extends BaseController
       $appointment=  $this->appointment->appointment($request->all());
       return $appointment;
     }
+    public function delete(Request $request){
+       
+        $appointment=  $this->appointment->delete($request->all());
+
+        return $this->sendresponse($appointment,'your record deleted successfully', 200);
+    }
+    public function index(){
+        
+        $appointment=Schedule::get();
+        return $this->sendresponse($appointment,'appointmnet listing', 200);
+    }
+
 }
