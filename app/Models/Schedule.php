@@ -12,4 +12,7 @@ class Schedule extends Model
     public function getdoctor(){
         return $this->hasMany(Doctor::class,'id','doctor_id');
     }
+    public function getpatient(){
+        return $this->hasMany(Patient::class,'id','user_id');
+    }
 }

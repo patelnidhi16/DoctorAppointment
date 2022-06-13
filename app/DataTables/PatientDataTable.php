@@ -27,10 +27,10 @@ class PatientDataTable extends DataTable
                 $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edit btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' > <span class='iconify' data-icon='ant-design:edit-filled'  data-height='19'></span></button>";
                 $result .= "<button data-target='#appointment' data-toggle='modal' dataid=' $user->id ' class='rounded schedule btn btn-primary mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' title='Add Appointmet'>
                 <span class='iconify' data-icon='carbon:add-filled'></span></button>";
-                
+
                 return $result;
             })
-            ->rawColumns([ 'action'])
+            ->rawColumns(['action'])
             ->addIndexColumn();
     }
 
@@ -44,7 +44,6 @@ class PatientDataTable extends DataTable
     {
         return $model->newQuery();
     }
-
     /**
      * Optional method if you want to use html builder.
      *
@@ -53,18 +52,18 @@ class PatientDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('patient-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('patient-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -88,7 +87,6 @@ class PatientDataTable extends DataTable
                 ->addClass('text-center'),
         ];
     }
-
     /**
      * Get filename for export.
      *

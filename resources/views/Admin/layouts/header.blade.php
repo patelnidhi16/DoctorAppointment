@@ -17,10 +17,11 @@
         
          
        
-       
+      
          <li class="nav-item dropdown">
            <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
              <div class="navbar-profile">
+             
              <span class="iconify" data-icon="carbon:user-avatar-filled" data-width="40" data-height="40"></span>
                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{Auth::guard('admin')->user()->email}}</p>
                <i class="mdi mdi-menu-down d-none d-sm-block"></i>

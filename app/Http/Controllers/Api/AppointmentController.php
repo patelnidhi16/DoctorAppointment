@@ -22,7 +22,7 @@ class AppointmentController extends BaseController
     }
     public function create(Request $request)
     {
-       
+      
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|numeric',
             'shift' => 'required|numeric',
@@ -35,7 +35,7 @@ class AppointmentController extends BaseController
         if ($validator->fails()) {
             return $this->sendError('validation error', $validator->errors(), 404);
         }
-      $appointment=  $this->appointment->appointment($request->all());
+      $appointment=  $this->appointment->create($request->all());
       return $appointment;
     }
     public function delete(Request $request){

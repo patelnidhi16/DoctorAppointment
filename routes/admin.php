@@ -23,12 +23,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/admin',function(){
+   return redirect()->route('admin.login');
+    });
 
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-
 
 /// demo multiple select and pdf export
 Route::get('/queue',function(){
@@ -40,12 +41,11 @@ Route::post('/examplestore', [ExampleController::class, 'examplestore'])->name('
 Route::get('/exampleedit/{id}', [ExampleController::class, 'exampleedit'])->name('exampleedit');
 Route::get('student_export', [ExampleController::class, 'get_student_data'])->name('student.export');
 
-// 
-
 
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::get('/notfound', [DashboardController::class, 'notfound'])->name('notfound');
     Route::post('/profile', [DashboardController::class, 'createprofile'])->name('createprofile');
 
     Route::group(['prefix' => 'doctor', 'as' => "doctor."], function () {

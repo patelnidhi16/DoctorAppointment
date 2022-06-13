@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/delete', [DoctorController::class, 'delete'])->name('delete');
     });
     Route::group(['prefix' => 'appointment', 'as' => "appointment."], function () {
-        Route::post('/create', [AppointmentController::class, 'appointment'])->name('appointment');
+        Route::post('/create', [AppointmentController::class, 'create'])->name('appointment');
         Route::get('/delete', [AppointmentController::class, 'delete'])->name('delete');
         Route::get('/index', [AppointmentController::class, 'index'])->name('index');
     });

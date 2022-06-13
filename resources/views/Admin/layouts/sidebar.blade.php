@@ -56,6 +56,8 @@
           <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
           </li>
+          
+         
           <li class="nav-item menu-items {{ request()->is('*dashboard*') ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.dashboard')}}">
               <span class="menu-icon">

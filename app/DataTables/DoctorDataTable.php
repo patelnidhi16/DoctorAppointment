@@ -32,7 +32,10 @@ class DoctorDataTable extends DataTable
                 
                 return $result;
             })
-
+            ->editColumn('shift', function ($data) {
+                return $data->shift == 1 ? 'Morning' : 'Evening';
+                
+            })
             ->rawColumns(['action'])
             ->addIndexColumn();
     }

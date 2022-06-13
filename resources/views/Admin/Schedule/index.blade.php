@@ -8,6 +8,27 @@
     color: red;
     font-size: 15px;
   }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: rgba(255, 255, 255, 0.8) url("https://login.connect.realtor/7a8cbb7079d70bd64c469435a71b4db9.gif") center no-repeat;
+  }
+
+  /* Turn off scrollbar when body element has the loading class */
+  body.loading {
+    overflow: hidden;
+  }
+
+  /* Make spinner image visible when body element has the loading class */
+  body.loading .overlay {
+    display: block;
+  }
 </style>
 @endpush
 @section('content')
@@ -102,7 +123,7 @@
               }
             });
           } else {
-            swal("Your imaginary file is safe!");
+            swal("Your record file is safe!");
           }
         });
 
@@ -182,32 +203,32 @@
 
 
         },
-       
-        
-       messages:{
-         
-         shift:{
-           required:"Shift is required field",
-         },
-         doctor_id:{
-           required:"Doctor name is required field",
-         },
-         date:{
-           required:"Date  is required field",
-         },
-        
-         start_time:{
-           required:"Start time  is required field",
-         },
-         end_time:{
-           required:"End time  is required field",
-         },
-       },
+
+
+        messages: {
+
+          shift: {
+            required: "Shift is required field",
+          },
+          doctor_id: {
+            required: "Doctor name is required field",
+          },
+          date: {
+            required: "Date  is required field",
+          },
+
+          start_time: {
+            required: "Start time  is required field",
+          },
+          end_time: {
+            required: "End time  is required field",
+          },
+        },
         submitHandler: function(form) {
           //  
           swal({
               title: "Are you sure?",
-              text: "Once deleted, you will not be able to recover this imaginary file!",
+              text: "Once updated, you will not be able to recover this imaginary file!",
               icon: "warning",
               buttons: true,
               dangerMode: true,
@@ -224,7 +245,7 @@
                   processData: false,
                   contentType: false,
                   success: function(data) {
-                 
+
                     if (data.status == false) {
                       $('span.error').html("");
                       swal(data.msg);
@@ -248,10 +269,9 @@
                   },
                 });
               } else {
-                swal("Your imaginary file is safe!");
+                swal("Your record file is safe!");
               }
             });
-
         }
       });
     });

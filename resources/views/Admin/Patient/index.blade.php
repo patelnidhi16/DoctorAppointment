@@ -8,9 +8,31 @@
     color: red;
     font-size: 15px;
   }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: rgba(255, 255, 255, 0.8) url("https://login.connect.realtor/7a8cbb7079d70bd64c469435a71b4db9.gif") center no-repeat;
+  }
+
+  /* Turn off scrollbar when body element has the loading class */
+  body.loading {
+    overflow: hidden;
+  }
+
+  /* Make spinner image visible when body element has the loading class */
+  body.loading .overlay {
+    display: block;
+  }
 </style>
 @endpush
 @section('content')
+<div class="overlay"></div>
 <div class="col-12 grid-margin stretch-card">
   <div class="card m-3">
     <div class="card-body">
@@ -83,25 +105,23 @@
           mobile: {
             required: true,
           },
-
-
         },
-       messages:{
-         first_name:{
-           required:"First name is required field",
-         },
-         last_name:{
-           required:"Last name is required field",
-         },
-         email:{
-           required:"Email  is required field",
-         },
-         mobile:{
-           required:"Mobile  is required field",
-         },
-       },
+        messages: {
+          first_name: {
+            required: "First name is required field",
+          },
+          last_name: {
+            required: "Last name is required field",
+          },
+          email: {
+            required: "Email  is required field",
+          },
+          mobile: {
+            required: "Mobile  is required field",
+          },
+        },
         submitHandler: function(form) {
-
+          $(document).find('label .error').html("");
           $.ajax({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -152,28 +172,29 @@
           end_time: {
             required: true,
           },
-          
+
           shift: {
             required: true,
           },
 
 
         },
-        messages:{
-         date:{
-           required:"Date name is required field",
-         },
-         start_time:{
-           required:"Start time name is required field",
-         },
-         end_time:{
-           required:"End Time  is required field",
-         },
-         shift:{
-           required:"Shift  is required field",
-         },
-       },  
+        messages: {
+          date: {
+            required: "Date name is required field",
+          },
+          start_time: {
+            required: "Start time name is required field",
+          },
+          end_time: {
+            required: "End Time  is required field",
+          },
+          shift: {
+            required: "Shift  is required field",
+          },
+        },
         submitHandler: function(form) {
+          $("body").addClass("loading");
           $('#addappointment').find('#user_id').val(user_id);
           $.ajax({
             headers: {
@@ -185,14 +206,16 @@
             processData: false,
             contentType: false,
             success: function(data) {
+
               if (data.status == false) {
+                $("body").removeClass("loading");
                 $('span.error ').html("");
                 swal(data.msg);
               } else {
                 $('.modal-backdrop').remove();
                 $('.modal').remove();
+                $("body").removeClass("loading");
                 swal(data.msg);
-
                 setTimeout(function() {
                   window.location.reload(1);
                 }, 3000);
@@ -200,7 +223,7 @@
               }
             },
             error: function(data) {
-              console.log(data);
+              $("body").removeClass("loading");
               var errors = $.parseJSON(data.responseText);
 
               $.each(errors.errors, function(key, value) {
@@ -261,7 +284,7 @@
               id: id
             },
             success: function(data) {
-              swal("Poof! Your imaginary file has been deleted!", {
+              swal("your record has been deleted!", {
                 icon: "success",
               });
               window.LaravelDataTables["patient-table"].draw();
@@ -270,7 +293,7 @@
             }
           });
         } else {
-          swal("Your imaginary file is safe!");
+          swal("Your record is safe!");
         }
       });
 
@@ -310,40 +333,40 @@
 
     $('#editpatient').validate({
       rules: {
-          first_name: {
-            required: true,
-          },
-          last_name: {
-            required: true,
-          },
-          email: {
-            required: true,
-            email: true,
-          },
-          mobile: {
-            required: true,
-          },
-
-
+        first_name: {
+          required: true,
         },
-       messages:{
-         first_name:{
-           required:"First name is required field",
-         },
-         last_name:{
-           required:"Last name is required field",
-         },
-         email:{
-           required:"Email  is required field",
-         },
-         mobile:{
-           required:"Mobile  is required field",
-         },
-       },
+        last_name: {
+          required: true,
+        },
+        email: {
+          required: true,
+          email: true,
+        },
+        mobile: {
+          required: true,
+        },
+
+
+      },
+      messages: {
+        first_name: {
+          required: "First name is required field",
+        },
+        last_name: {
+          required: "Last name is required field",
+        },
+        email: {
+          required: "Email  is required field",
+        },
+        mobile: {
+          required: "Mobile  is required field",
+        },
+      },
       submitHandler: function(form) {
         swal({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
+            text: "Once updated, you will not be able to recover this imaginary file!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -377,7 +400,7 @@
                 },
               });
             } else {
-              swal("Your imaginary file is safe!");
+              swal("Your record file is safe!");
             }
           });
         // 

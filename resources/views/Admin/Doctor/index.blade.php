@@ -181,8 +181,7 @@
 
             }
           });
-        } else {
-          swal("Your imaginary file is safe!");
+        } else {swal("Your record is safe!");
         }
       });
   });
@@ -206,7 +205,6 @@
       },
       success: function(data) {
         var name=data.name;
-        
         var first_name=name.split(' ')[0];
         var last_name=name.split(' ')[1];
         $('#id').val(data.id);
@@ -277,7 +275,7 @@
         //  
         swal({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
+            text: "Once updated, you will not be able to recover this imaginary file!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -313,7 +311,7 @@
                 },
               });
             } else {
-              swal("Your imaginary file is safe!");
+              swal("Your record file is safe!");
             }
           });
         // 

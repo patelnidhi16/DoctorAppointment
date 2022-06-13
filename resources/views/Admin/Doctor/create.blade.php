@@ -26,14 +26,12 @@
                         <label for="email">Email address</label>
                         <input type="email" class="form-control" id="email" placeholder="Email" name="email">
                         <span class="error"></span>
-
                     </div>
 
                     <div class="form-group">
                         <label for="mobile">Mobile No.</label>
                         <input type="number" class="form-control" id="mobile" placeholder="Mobile No." name="mobile">
                         <span class="error"></span>
-
                     </div>
                     <div class="form-group">
                         <label for="shift">Select Shift</label>

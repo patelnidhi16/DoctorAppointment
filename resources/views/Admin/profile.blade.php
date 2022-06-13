@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Enter Email</label>
-                <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" value="{{Auth::guard('admin')->user()->email}}">
+                <input type="text" class="form-control" id="email" placeholder="Enter email"  name="email" value="{{Auth::guard('admin')->user()->email}}">
                 <span class="error"></span>
             </div>
             <div class="form-group">

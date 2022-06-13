@@ -56,7 +56,6 @@
                                                                 <b>Date:</b> {{$date}}<br>
                                                                 <b>Startt Time:</b> {{$starttime}}<br>
                                                                 <b>End Time:</b> {{$endtime}}<br>
-
                                                                 <p>your user id is <b>{{$user_name}}</b></p>
 
                                                             </td>

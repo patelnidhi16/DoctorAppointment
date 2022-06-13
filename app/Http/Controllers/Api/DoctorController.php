@@ -8,6 +8,7 @@ use App\Interfaces\DoctorInterface;
 use App\Models\Doctor;
 use App\Repositories\DoctorRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DoctorController extends BaseController

@@ -30,12 +30,22 @@ class ScheduleDataTable extends DataTable
 
                 return $result;
             })
-
+            ->editColumn('shift', function ($data) {
+                return $data->shift == 1 ? 'Morning' : 'Evening';
+                
+            })
+            ->editColumn('doctor_id', function ($data) {
+                $detail=$data->getdoctor->toArray();
+                return $detail[0]['name'];
+            })
+            ->editColumn('user_id', function ($data) {
+                $detail=$data->getpatient->toArray();
+                return $detail[0]['name'];
+            })
             ->rawColumns(['image', 'action'])
             ->addIndexColumn();
     }
-
-    /**
+    /*
      * Get query source of dataTable.
      *
      * @param \App\Models\Schedule $model
@@ -43,7 +53,7 @@ class ScheduleDataTable extends DataTable
      */
     public function query(Schedule $model)
     {
-        return $model->newQuery();
+        return $model->with('getdoctor')->newQuery();
     }
 
     /**

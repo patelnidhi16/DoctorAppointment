@@ -34,7 +34,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label>Email *</label>
-                                    <input type="text" class="form-control p_input" name="email">
+                                    <input type="text" class="form-control p_input" name="email" value="{{old('email')}}">
                                 </div>
                                 <div class="form-group">
                                     <label>Password *</label>
@@ -42,19 +42,18 @@
                                 </div>
                                 <div class="form-group d-flex align-items-center justify-content-between">
                                     <div class="form-check">
-                                        
                                     </div>
                                     <a href="#" class="forgot-pass">Forgot password</a>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                                 </div>
-                                <div class="d-flex">
+                                <!-- <div class="d-flex">
                                     <button class="btn btn-facebook mr-2 col">
                                         <i class="mdi mdi-facebook"></i> Facebook </button>
                                     <button class="btn btn-google col">
                                         <i class="mdi mdi-google-plus"></i> Google plus </button>
-                                </div>
+                                </div> -->
                                 <p class="sign-up">Don't have an Account?<a href="#"> Sign Up</a></p>
                             </form>
                         </div>
@@ -68,30 +67,35 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="{{asset('admin/assets/vendors/js/vendor.bundle.base.js')}}"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="{{asset('admin/assets/js/off-canvas.js')}}"></script>
-    <script src="{{asset('admin/assets/js/hoverable-collapse.js')}}"></script>
-    <script src="{{asset('admin/assets/js/misc.js')}}"></script>
-    <script src="{{asset('admin/assets/js/settings.js')}}"></script>
-    <script src="{{asset('admin/assets/js/todolist.js')}}"></script>
+   
 
     <!-- endinject -->
 </body>
-<script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js')}}"></script>
-<script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+
 <script>
     $('#loginform').validate({
         rules: {
             email: {
+           
                 required: true,
                 email: true,
+                pattern:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i,
             },
             password: {
                 required: true,
+            },
+        },
+        messages: {
+            email: {
+                required: "Email field is required",
+                email: "Please enter email in valid formate",
+                pattern:"Please enter email in valid formates",
+            },
+            password: {
+                required:  "Password field is required",
             },
         },
         submitHandler: function(form) {

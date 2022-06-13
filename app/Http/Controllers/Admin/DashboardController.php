@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\ExampleDataTable;
 use App\Exports\StudentExport;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Doctor;
 use App\Models\Example;
 use App\Models\Patient;
@@ -34,9 +35,20 @@ class DashboardController extends Controller
     public function profile(){
        return view('Admin.profile');
     }
-    public function createprofile(Request $request){
-        $request->file('image')->getClientOriginalName();
-       Admin::update([]);
-       return view('Admin.profile');
+    public function notfound(){
+       return view('Admin.notfound');
     }
+    // public function createprofile(Request $request){
+    //     // dd($request->all());
+    //    $image= $request->file('image')->getClientOriginalName();
+   
+    //    Admin::where('id',$request->id)->update([
+    //        'name'=>$request->name,
+    //        'email'=>$request->email,
+    //        'image'=>$image,
+    //    ]);
+    //    $request->image->move('public/', $image);
+    //    return view('admin.content',compact('image'));
+    // <img src="' . asset('/public/' . $data->image) . '" style="height: 50px; width:50px;">
+    // }
 }

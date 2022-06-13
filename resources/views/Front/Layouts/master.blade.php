@@ -37,14 +37,17 @@ http://www.tooplate.com/view/2098-health
 
             <span class="spinner-rotate"></span>
 
+            <section class="preloader">
+        <div class="spinner">
+
+            <span class="spinner-rotate"></span>
+        </div>
+    </section>            
         </div>
     </section>
-
-
     @include('Front.Layouts.header')
     @yield('content')
     @include('Front.Layouts.footer')
-
 
     <!-- SCRIPTS -->
     <script src="{{asset('front/js/jquery.js')}}"></script>
