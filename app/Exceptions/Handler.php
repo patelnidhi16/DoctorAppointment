@@ -41,6 +41,8 @@ class Handler extends ExceptionHandler
     }
     public function render($request, Throwable $e)
     {
+       
+    
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             return redirect()->route('admin.notfound');
         }

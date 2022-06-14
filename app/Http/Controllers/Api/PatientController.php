@@ -30,6 +30,7 @@ class PatientController extends BaseController
     }
     public function create(Request $request)
     {
+     ;
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|alpha|min:2',
             'last_name' => 'required|alpha|min:2',

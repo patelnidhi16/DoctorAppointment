@@ -8935,6 +8935,13 @@ button:focus {
     outline: 5px auto -webkit-focus-ring-color;
 }
 
+input[placeholder],
+[placeholder],
+*[placeholder],
+select {
+    color: white !important;
+}
+
 input,
 button,
 select,
@@ -8944,6 +8951,11 @@ textarea {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+}
+
+input,
+input-placeholder {
+    color: white;
 }
 
 button,
@@ -15211,8 +15223,8 @@ input[type="button"].btn-block {
 .jsgrid .jsgrid-pager .active.jsgrid-pager-page a {
     z-index: 3;
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: black;
+    border-color: black;
 }
 
 .page-item.disabled .page-link,
@@ -15224,11 +15236,11 @@ input[type="button"].btn-block {
 .page-item.disabled .jsgrid .jsgrid-pager .jsgrid-pager-page a,
 .jsgrid .jsgrid-pager .jsgrid-pager-page .page-item.disabled a,
 .jsgrid .jsgrid-pager .disabled.jsgrid-pager-page a {
-    color: #6c757d;
+    color: white !important;
     pointer-events: none;
     cursor: auto;
-    background-color: #fff;
-    border-color: #dee2e6;
+    background-color: white !impor;
+    border-color: white !important;
 }
 
 .pagination-lg .page-link,
@@ -37728,3 +37740,12 @@ div.tagsinput span.tag a {
 
 
 /*# sourceMappingURL=maps/style.css.map */
+
+
+/*# sourceMappingURL=maps/style.css.map */
+
+
+/*# sourceMappingURL=maps/style.css.map */
+
+
+/*# sourceMappingURL=maps/style.css.m

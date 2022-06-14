@@ -188,7 +188,7 @@
                     $.each(errors.errors, function(key, value) {
                         console.log(key);
                         console.log(value);
-                        $('#createdoctor').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                        $('#createdoctor').find('[name=' + key + ']').next('label').html(value[0]);
                     });
                 },
             });

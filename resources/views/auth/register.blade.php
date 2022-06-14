@@ -137,7 +137,7 @@ http://www.tooplate.com/view/2098-health
                         $.each(errors.errors, function(key, value) {
                             console.log(key);
                             console.log(value);
-                            $('#register').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                            $('#register').find('[name=' + key + ']').next('label').html(value[0]);
                         });
                     },
                 });

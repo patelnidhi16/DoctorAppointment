@@ -1,12 +1,21 @@
 @extends('Admin.layouts.master')
 @push('style')
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css"  rel="stylesheet">
 <style>
+  .fa {
+    margin-left: -12px;
+    margin-right: 8px;
+  }
   .error,
-  span.error {
+  label.error {
     color: red;
     font-size: 15px;
+  }
+
+  label.error {
+    display: inline-block !important;
   }
 
   .overlay {
@@ -59,7 +68,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script><script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 {!! $dataTable->scripts() !!}
@@ -225,7 +234,8 @@
           },
         },
         submitHandler: function(form) {
-          //  
+          $(".add_appointment_btn").html('<i class="fa fa-spinner fa-spin"></i>Loading');
+          $(".add_appointment_btn").attr('disabled', true);
           swal({
               title: "Are you sure?",
               text: "Once updated, you will not be able to recover this imaginary file!",
@@ -245,9 +255,10 @@
                   processData: false,
                   contentType: false,
                   success: function(data) {
-
+                    $(".add_appointment_btn").html('Verify');
+                    $(".add_appointment_btn").attr('disabled', false);
                     if (data.status == false) {
-                      $('span.error').html("");
+                      $('.error').html("");
                       swal(data.msg);
                     } else {
                       $('.modal').remove();
@@ -264,7 +275,7 @@
                     $.each(errors.errors, function(key, value) {
                       console.log(key);
                       console.log(value);
-                      $('#editdoctor').find('[name=' + key + ']').nextAll('span').html(value);
+                      $('#editdoctor').find('[name=' + key + ']').next('label').html(value);
                     });
                   },
                 });

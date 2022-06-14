@@ -1,12 +1,22 @@
 @extends('Admin.layouts.master')
 @push('style')
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css"  rel="stylesheet">
 
 <style>
-  .error,
-  span.error {
+  .fa {
+    margin-left: -12px;
+    margin-right: 8px;
+  }
+
+  .error {
     color: red;
     font-size: 15px;
+  }
+
+  label.error {
+    display: inline-block !important;
   }
 
   .overlay {
@@ -32,7 +42,6 @@
 </style>
 @endpush
 @section('content')
-<div class="overlay"></div>
 <div class="col-12 grid-margin stretch-card">
   <div class="card m-3">
     <div class="card-body">
@@ -55,6 +64,7 @@
 </div>
 @endsection
 @section('modal')
+
 @include('Admin.Patient.create')
 @endsection
 
@@ -64,6 +74,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 {!! $dataTable->scripts() !!}
@@ -143,9 +154,8 @@
               var errors = $.parseJSON(data.responseText);
 
               $.each(errors.errors, function(key, value) {
-                console.log(key);
-                console.log(value);
-                $('#createpatient').find('[name=' + key + ']').nextAll('span').html(value[0]);
+
+                $('#createpatient').find('[name=' + key + ']').next('label').html(value[0]);
               });
             },
           });
@@ -194,7 +204,8 @@
           },
         },
         submitHandler: function(form) {
-          $("body").addClass("loading");
+          $(".add_appointment_btn").html('<i class="fa fa-spinner fa-spin"></i>Loading');
+          $(".add_appointment_btn").attr('disabled', true);
           $('#addappointment').find('#user_id').val(user_id);
           $.ajax({
             headers: {
@@ -206,15 +217,14 @@
             processData: false,
             contentType: false,
             success: function(data) {
-
+              $(".add_appointment_btn").html('Verify');
+              $(".add_appointment_btn").attr('disabled', false);
               if (data.status == false) {
-                $("body").removeClass("loading");
-                $('span.error ').html("");
+                $('.error ').html("");
                 swal(data.msg);
               } else {
                 $('.modal-backdrop').remove();
                 $('.modal').remove();
-                $("body").removeClass("loading");
                 swal(data.msg);
                 setTimeout(function() {
                   window.location.reload(1);
@@ -223,13 +233,12 @@
               }
             },
             error: function(data) {
-              $("body").removeClass("loading");
+
               var errors = $.parseJSON(data.responseText);
 
               $.each(errors.errors, function(key, value) {
-                console.log(key);
-                console.log(value);
-                $('#addappointment').find('[name=' + key + ']').nextAll('span').html(value[0]);
+
+                $('#addappointment').find('[name=' + key + ']').next('label').html(value[0]);
               });
             },
           });
@@ -395,7 +404,7 @@
                   $.each(errors.errors, function(key, value) {
                     console.log(key);
                     console.log(value);
-                    $('#editpatient').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                    $('#createpatient').find('[name=' + key + ']').next('label').html(value[0]);
                   });
                 },
               });

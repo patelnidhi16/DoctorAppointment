@@ -28,33 +28,33 @@
             <div class="row w-100 m-0">
                 <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
                     <div class="card col-lg-4 mx-auto">
-                        <div class="card-body px-5 py-5">
+                        <div class="card-body px-5 py-5" style="height: 400px;width: 532px;">
                             <h3 class="card-title text-left mb-3">Login</h3>
-                            <form method="POST" id="loginform" action="">
+                            <form method="POST" id="loginform" action="{{route('admin.login')}}">
                                 @csrf
                                 <div class="form-group">
                                     <label>Email *</label>
                                     <input type="text" class="form-control p_input" name="email" value="{{old('email')}}">
+                                    @error('email')
+                                    <div class="error text-danger">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Password *</label>
                                     <input type="password" class="form-control p_input" name="password">
-                                </div>
-                                <div class="form-group d-flex align-items-center justify-content-between">
-                                    <div class="form-check">
+                                    @error('password')
+                                    <div class="error text-danger">
+                                        {{ $message }}
                                     </div>
-                                    <a href="#" class="forgot-pass">Forgot password</a>
+                                    @enderror
                                 </div>
+                             
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                                 </div>
-                                <!-- <div class="d-flex">
-                                    <button class="btn btn-facebook mr-2 col">
-                                        <i class="mdi mdi-facebook"></i> Facebook </button>
-                                    <button class="btn btn-google col">
-                                        <i class="mdi mdi-google-plus"></i> Google plus </button>
-                                </div> -->
-                                <p class="sign-up">Don't have an Account?<a href="#"> Sign Up</a></p>
+                                
                             </form>
                         </div>
                     </div>
@@ -98,23 +98,7 @@
                 required:  "Password field is required",
             },
         },
-        submitHandler: function(form) {
-           
-            $.ajax({
-                headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-                url: '{{route("admin.login")}}',
-                type: 'POST',
-                data: new FormData(form),
-                success: function(data) {
-                  alert(1);
-                },
-                error:function(data){
-                    alert(12);
-                }
-            });
-        }
+       
     });
 </script>
 

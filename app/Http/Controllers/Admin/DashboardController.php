@@ -32,23 +32,27 @@ class DashboardController extends Controller
 
         return view('Admin.content', compact('todayappointmentcount', 'patientcount', 'doctorscount', 'doctor_info', 'today_doctor_info', 'totalappointmentcount'));
     }
-    public function profile(){
-       return view('Admin.profile');
+    public function profile()
+    {
+        return view('Admin.profile');
     }
-    public function notfound(){
-       return view('Admin.notfound');
+    public function notfound()
+    {
+        return view('Admin.notfound');
     }
-    // public function createprofile(Request $request){
-    //     // dd($request->all());
-    //    $image= $request->file('image')->getClientOriginalName();
-   
-    //    Admin::where('id',$request->id)->update([
-    //        'name'=>$request->name,
-    //        'email'=>$request->email,
-    //        'image'=>$image,
-    //    ]);
-    //    $request->image->move('public/', $image);
-    //    return view('admin.content',compact('image'));
-    // <img src="' . asset('/public/' . $data->image) . '" style="height: 50px; width:50px;">
-    // }
+    public function createprofile(Request $request)
+    {
+        // dd($request->all());
+        $image = $request->file('image')->getClientOriginalName();
+
+        Admin::where('id', $request->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'image' => $image,
+        ]);
+
+        
+        $request->image->move('public/', $image);
+        return  redirect()->route('admin.dashboard');
+    }
 }

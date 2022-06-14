@@ -157,7 +157,7 @@
                             $.each(errors.errors, function(key, value) {
                                 console.log(key);
                                 console.log(value);
-                                $('#createappointment').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                                $('#createappointment').find('[name=' + key + ']').next('label').html(value[0]);
                             });
                         },
                     });
@@ -304,7 +304,7 @@
                                     $.each(errors.errors, function(key, value) {
                                         console.log(key);
                                         console.log(value);
-                                        $('#updateappointment').find('[name=' + key + ']').nextAll('span').html(value[0]);
+                                        $('#updateappointment').find('[name=' + key + ']').next('label').html(value[0]);
                                     });
                                 },
                             });
