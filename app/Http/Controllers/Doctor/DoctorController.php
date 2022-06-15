@@ -41,6 +41,6 @@ class DoctorController extends Controller
         $data = Doctor::find($id);
         return $data;
     }
-
+   
    
 }

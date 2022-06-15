@@ -15162,7 +15162,7 @@ input[type="button"].btn-block {
     padding: 0.5rem 0.75rem;
     margin-left: -1px;
     line-height: 1.25;
-    color: #007bff;
+    color: white !important;
     background-color: #000000;
     border: 1px solid #dee2e6;
 }
@@ -15171,9 +15171,9 @@ input[type="button"].btn-block {
 .jsgrid .jsgrid-pager .jsgrid-pager-nav-button a:hover,
 .jsgrid .jsgrid-pager .jsgrid-pager-page a:hover {
     z-index: 2;
-    color: #0056b3;
+    color: black;
     text-decoration: none;
-    background-color: #e9ecef;
+    background-color: white;
     border-color: #dee2e6;
 }
 
@@ -15222,9 +15222,9 @@ input[type="button"].btn-block {
 .jsgrid .jsgrid-pager .jsgrid-pager-page .page-item.active a,
 .jsgrid .jsgrid-pager .active.jsgrid-pager-page a {
     z-index: 3;
-    color: #fff;
-    background-color: black;
-    border-color: black;
+    color: black !important;
+    background-color: white;
+    border-color: !important;
 }
 
 .page-item.disabled .page-link,
@@ -15239,7 +15239,7 @@ input[type="button"].btn-block {
     color: white !important;
     pointer-events: none;
     cursor: auto;
-    background-color: white !impor;
+    background-color: #2f323c !important;
     border-color: white !important;
 }
 
@@ -37748,4 +37748,6 @@ div.tagsinput span.tag a {
 /*# sourceMappingURL=maps/style.css.map */
 
 
-/*# sourceMappingURL=maps/style.css.m
+/*# sourceMappingURL=maps/style.css.m*/
+
+nt

@@ -1,7 +1,7 @@
 @extends('Admin.layouts.master')
 @push('style')
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css"  rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css" rel="stylesheet">
 
 
 <style>
@@ -9,26 +9,28 @@
     color: red;
     font-size: 15px;
   }
-  label.error{
+
+  label.error {
     display: inline-block !important;
   }
-
 </style>
 @endpush
 @section('content')
+
+
 <div class="col-12 grid-margin stretch-card">
   <div class="card m-3">
     <div class="card-body">
       <!-- Button trigger modal -->
 
       <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false">
-      <span class="iconify" data-icon="carbon:add-filled" data-width="20" data-height="20"></span>
+        <span class="iconify" data-icon="carbon:add-filled" data-width="20" data-height="20"></span>
       </button>
       <!-- Modal -->
       <div class="card">
-        <div class="card-body" >
+        <div class="card-body">
           <select class="form-control col-2 ml-5" id="shift_filter" name="date">
-            <option value=" " >Select Shift </option>
+            <option value=" ">Select Shift </option>
             <option value="1">Morning</option>
             <option value="2">Evening</option>
           </select>
@@ -101,30 +103,30 @@
             required: true,
           },
         },
-        
-       messages:{
-         first_name:{
-           required:"First name is required field",
-         },
-         shift:{
-           required:"Shift is required field",
-         },
-         last_name:{
-           required:"Last name is required field",
-         },
-         email:{
-           required:"Email  is required field",
-         },
-         mobile:{
-           required:"Mobile  is required field",
-         },
-         start_time:{
-           required:"Start time  is required field",
-         },
-         end_time:{
-           required:"End time  is required field",
-         },
-       },
+
+        messages: {
+          first_name: {
+            required: "First name is required field",
+          },
+          shift: {
+            required: "Shift is required field",
+          },
+          last_name: {
+            required: "Last name is required field",
+          },
+          email: {
+            required: "Email  is required field",
+          },
+          mobile: {
+            required: "Mobile  is required field",
+          },
+          start_time: {
+            required: "Start time  is required field",
+          },
+          end_time: {
+            required: "End time  is required field",
+          },
+        },
         submitHandler: function(form) {
 
           $.ajax({
@@ -188,7 +190,8 @@
 
             }
           });
-        } else {swal("Your record is safe!");
+        } else {
+          swal("Your record is safe!");
         }
       });
   });
@@ -211,9 +214,9 @@
         id: id
       },
       success: function(data) {
-        var name=data.name;
-        var first_name=name.split(' ')[0];
-        var last_name=name.split(' ')[1];
+        var name = data.name;
+        var first_name = name.split(' ')[0];
+        var last_name = name.split(' ')[1];
         $('#id').val(data.id);
         $('#first_name').val(first_name);
         $('#last_name').val(last_name);
@@ -230,54 +233,54 @@
 
     $('#editdoctor').validate({
       rules: {
-          first_name: {
-            required: true,
-          },
-          last_name: {
-            required: true,
-          },
-          email: {
-            required: true,
-            email: true,
-          },
-          mobile: {
-            required: true,
-          },
-          shift: {
-            required: true,
-          },
-
-          start_time: {
-            required: true,
-          },
-          end_time: {
-            required: true,
-          },
+        first_name: {
+          required: true,
         },
-        
-       messages:{
-         first_name:{
-           required:"First name is required field",
-         },
-         shift:{
-           required:"Shift is required field",
-         },
-         last_name:{
-           required:"Last name is required field",
-         },
-         email:{
-           required:"Email  is required field",
-         },
-         mobile:{
-           required:"Mobile  is required field",
-         },
-         start_time:{
-           required:"Start time  is required field",
-         },
-         end_time:{
-           required:"End time  is required field",
-         },
-       },
+        last_name: {
+          required: true,
+        },
+        email: {
+          required: true,
+          email: true,
+        },
+        mobile: {
+          required: true,
+        },
+        shift: {
+          required: true,
+        },
+
+        start_time: {
+          required: true,
+        },
+        end_time: {
+          required: true,
+        },
+      },
+
+      messages: {
+        first_name: {
+          required: "First name is required field",
+        },
+        shift: {
+          required: "Shift is required field",
+        },
+        last_name: {
+          required: "Last name is required field",
+        },
+        email: {
+          required: "Email  is required field",
+        },
+        mobile: {
+          required: "Mobile  is required field",
+        },
+        start_time: {
+          required: "Start time  is required field",
+        },
+        end_time: {
+          required: "End time  is required field",
+        },
+      },
       submitHandler: function(form) {
         //  
         swal({
@@ -299,7 +302,7 @@
                 processData: false,
                 contentType: false,
                 success: function(data) {
-               
+
                   $('#exampleModal').hide();
                   $('.modal-backdrop').remove();
                   swal("doctor updated successfully");
@@ -326,5 +329,6 @@
       }
     });
   });
+  
 </script>
 @endpush

@@ -12,7 +12,6 @@ class Patient extends Model
     public $guarded = [];
     public function setname($value)
     {
-
         $this->attributes['first_name'] = Str::ucfirst($value);
         $this->attributes['last_name'] = Str::ucfirst($value);
     }

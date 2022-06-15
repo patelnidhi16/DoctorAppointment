@@ -29,7 +29,7 @@ class DoctorDataTable extends DataTable
                 </button>";
                 $result .= "<button data-target='#exampleModal' data-toggle='modal' dataid=' $user->id ' class='rounded edits btn btn-success mr-2' data-backdrop='static' data-keyboard='false'style='height:40px' >
                 <span class='iconify' data-icon='ant-design:edit-filled'  data-height='19'></span></button>";
-                
+                               
                 return $result;
             })
             ->editColumn('shift', function ($data) {
